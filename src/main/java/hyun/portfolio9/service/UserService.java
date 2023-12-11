@@ -14,6 +14,7 @@ public class UserService {
     public String create(JoinDto dto) {
         User user = User.builder()
                 .userName(dto.getUserName())
+                .userPassword(dto.getUserPassword())
 //                .UserRole(dto.getUserRole())
                 .build();
         userRepository.save(user);

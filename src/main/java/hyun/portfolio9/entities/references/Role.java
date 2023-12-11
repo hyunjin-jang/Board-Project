@@ -1,5 +1,5 @@
 package hyun.portfolio9.entities.references;
 
 public enum Role {
-    ADMIN, USER
+    ADMIN, GUEST
 }

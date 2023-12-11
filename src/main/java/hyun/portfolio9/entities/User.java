@@ -10,10 +10,12 @@ import lombok.*;
 @Entity
 @AllArgsConstructor
 @Builder
+@Getter
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
     private String userName;
-//    private Role UserRole;
+    private String userPassword;
+    private Role userRole;
 }
