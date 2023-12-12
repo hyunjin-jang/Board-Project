@@ -1,6 +1,7 @@
 package hyun.portfolio9.controlers;
 
 import hyun.portfolio9.entities.dto.JoinDto;
+import hyun.portfolio9.entities.dto.LoginDto;
 import hyun.portfolio9.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
@@ -24,14 +25,14 @@ public class UserControler {
         return userService.create(dto);
     }
 
+//    @PostMapping("/login")
+//    private void login(@RequestBody LoginDto dto) {
+//        userService.login(dto);
+//    }
+
     @GetMapping("/hello")
     private String hello(){
         return "HELLO";
-    }
-
-    @GetMapping("/fail")
-    private String fail(){
-        return "Fail";
     }
 
     @GetMapping("/main/user")

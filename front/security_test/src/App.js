@@ -13,8 +13,7 @@ function App() {
       { login ? <Login/> : null }
 
       <h4 onClick={()=>{
-        
-        axios.get('http://localhost:8080/main/admin')
+        axios.get('http://localhost:8080/hello')
           .then((result)=>{
             console.log(result.data)
             var target = document.getElementById('fail_page')
@@ -23,6 +22,10 @@ function App() {
             }
           }).catch(()=>{
             console.log('fail')
+            var target = document.getElementById('fail_page')
+            if (target) {
+              target.innerHTML = "Sever Error";
+            }
           })
       }}>{ data }</h4>
       <div id='fail_page'></div>

@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { useState } from 'react';
 
 export default function Login(){
@@ -15,7 +16,9 @@ export default function Login(){
         setPassword(e.target.value)
       }}></input>
       <br/>
-      <button>Login</button>
+      <button onClick={()=>{
+        axios.post()
+      }}>Login</button>
     </div>
   )
 }
