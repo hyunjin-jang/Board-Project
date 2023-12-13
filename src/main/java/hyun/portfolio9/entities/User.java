@@ -1,10 +1,7 @@
 package hyun.portfolio9.entities;
 
 import hyun.portfolio9.entities.references.Role;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
@@ -18,5 +15,6 @@ public class User {
     private Long userId;
     private String userName;
     private String userPassword;
+    @Enumerated(EnumType.STRING)
     private Role userRole;
 }
