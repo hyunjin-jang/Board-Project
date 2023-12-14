@@ -25,10 +25,11 @@ public class UserControler {
         return userService.create(dto);
     }
 
-//    @PostMapping("/login")
-//    private void login(@RequestBody LoginDto dto) {
+    @PostMapping("/login")
+    private void login(@RequestBody LoginDto dto) {
+        System.out.println("Use Cotroller Login ");
 //        userService.login(dto);
-//    }
+    }
 
     @GetMapping("/hello")
     private String hello(){

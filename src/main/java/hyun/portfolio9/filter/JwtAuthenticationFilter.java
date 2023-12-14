@@ -1,19 +1,28 @@
 package hyun.portfolio9.filter;
 
-import com.google.gson.Gson;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import hyun.portfolio9.configures.JwtAuthenticationManager;
+import hyun.portfolio9.configures.auth.PrincipalDetails;
 import hyun.portfolio9.entities.User;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 
-
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
+
+    private final JwtAuthenticationManager jwtAuthenticationManager;
+
+    public JwtAuthenticationFilter(JwtAuthenticationManager jwtAuthenticationManager) {
+        this.jwtAuthenticationManager = jwtAuthenticationManager;
+    }
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
@@ -21,18 +30,26 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         System.out.println("Jwt로그인 시도");
 
         try {
-            BufferedReader br = request.getReader();
-            String input = null;
-            while ((input = br.readLine()) != null) {
-                System.out.println(input);
-            }
+            ObjectMapper om = new ObjectMapper();
+            User user = om.readValue(request.getInputStream(), User.class);
+
+            UsernamePasswordAuthenticationToken authenticationToken =
+                    new UsernamePasswordAuthenticationToken(user.getUserName(), user.getUserPassword());
+
+            Authentication authentication = jwtAuthenticationManager.authenticate(authenticationToken);
+
+            PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+            System.out.println("로그인 완료: " + principalDetails.getUsername());
+
+            return authentication;
+
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
 
         System.out.println("===============================");
 
-        return super.attemptAuthentication(request, response);
+        return null;
 //        UsernamePasswordAuthenticationToken authRequest = UsernamePasswordAuthenticationToken.unauthenticated("testName1", "testPassword1");
 //        setDetails(request, authRequest);
 //        return this.getAuthenticationManager().authenticate(authRequest);
