@@ -11,5 +11,4 @@ import lombok.NoArgsConstructor;
 public class JoinDto {
     private String userName;
     private String userPassword;
-    private Role userRole;
 }

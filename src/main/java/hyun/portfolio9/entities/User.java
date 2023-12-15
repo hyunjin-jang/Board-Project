@@ -4,11 +4,14 @@ import hyun.portfolio9.entities.references.Role;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.Arrays;
+import java.util.List;
+
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Getter
+@Data
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,5 +19,5 @@ public class User {
     private String userName;
     private String userPassword;
     @Enumerated(EnumType.STRING)
-    private Role userRole;
+    private List<Role> userRole = Arrays.asList(Role.GUEST);
 }

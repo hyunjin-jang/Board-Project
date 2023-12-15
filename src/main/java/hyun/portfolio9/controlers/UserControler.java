@@ -1,17 +1,16 @@
 package hyun.portfolio9.controlers;
 
+import hyun.portfolio9.entities.User;
 import hyun.portfolio9.entities.dto.JoinDto;
 import hyun.portfolio9.entities.dto.LoginDto;
+import hyun.portfolio9.repositories.UserRepository;
 import hyun.portfolio9.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
 
@@ -19,16 +18,26 @@ import java.util.Collection;
 @RequiredArgsConstructor
 public class UserControler {
     private final UserService userService;
+    private final UserRepository userRepository;
 
     @PostMapping("/user")
     private String create(@RequestBody JoinDto dto) {
         return userService.create(dto);
     }
 
-    @PostMapping("/login")
-    private void login(@RequestBody LoginDto dto) {
-        System.out.println("Use Cotroller Login ");
+//    @PostMapping("/login")
+//    private void login(@RequestBody LoginDto dto) {
+//        System.out.println("Use Cotroller Login ");
 //        userService.login(dto);
+//    }
+
+    @GetMapping("/blob/{name}")
+    private String blob(@PathVariable String name) {
+        User user = userRepository.findByUserName(name);
+        if(user == null) {
+            return "user정보 없음!";
+        }
+        return user.getUserRole().toString();
     }
 
     @GetMapping("/hello")

@@ -18,18 +18,20 @@ import org.springframework.stereotype.Component;
 public class JwtAuthenticationManager implements AuthenticationManager {
     @Lazy
     private final PrincipalDetailsService principalDetailsService;
-    private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
+        System.out.println("JwtAuthenticationManager 작동함");
         String username = authentication.getName();
         String password = authentication.getCredentials().toString();
 
+        // User 이름 있는지 확인
         PrincipalDetails principalDetails = (PrincipalDetails) principalDetailsService.loadUserByUsername(username);
 
-        if (!password.equals("1111")) {
+        if (!password.equals(principalDetails.getPassword())) {
+            System.out.println("비번 틀림");
             throw new UsernameNotFoundException("Invalid credentials");
         }
 
-        return new UsernamePasswordAuthenticationToken(principalDetails, null, principalDetails.getAuthorities());
+        return new UsernamePasswordAuthenticationToken(principalDetails, password, principalDetails.getAuthorities());
     }
 }
