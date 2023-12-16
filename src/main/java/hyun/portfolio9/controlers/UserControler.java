@@ -26,9 +26,8 @@ public class UserControler {
     }
 
 //    @PostMapping("/login")
-//    private void login(@RequestBody LoginDto dto) {
+//    private void login() {
 //        System.out.println("Use Cotroller Login ");
-//        userService.login(dto);
 //    }
 
     @GetMapping("/blob/{name}")
@@ -45,7 +44,7 @@ public class UserControler {
         return "HELLO";
     }
 
-    @GetMapping("/main/user")
+    @GetMapping("/user")
     private String guest() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
@@ -61,7 +60,7 @@ public class UserControler {
         return "guest 제대로 작동됨";
     }
 
-    @GetMapping("/main/admin")
+    @GetMapping("/admin")
     private String admin() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 

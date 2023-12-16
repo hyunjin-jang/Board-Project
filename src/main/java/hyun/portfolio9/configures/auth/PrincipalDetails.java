@@ -2,6 +2,7 @@ package hyun.portfolio9.configures.auth;
 
 import hyun.portfolio9.entities.User;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.ArrayList;
@@ -16,8 +17,8 @@ public class PrincipalDetails implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Collection<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
-        user.getUserRole().forEach(r -> {
-            authorities.add(() -> String.valueOf(r));
+        user.getUserRole().forEach(role -> {
+            authorities.add(new SimpleGrantedAuthority(role.toString()));
         });
         return authorities;
     }

@@ -20,6 +20,7 @@ public class PrincipalDetailsService implements UserDetailsService {
         if (user == null) {
             throw new UsernameNotFoundException("User not found with username: " + username);
         }
+
         System.out.println("유저네임 있음");
         return new PrincipalDetails(user);
     }

@@ -2,8 +2,12 @@ import axios from 'axios';
 import React, { useState } from 'react';
 
 export default function Login(){
-  const [id, setId] = useState()
-  const [password, setPassword] = useState()
+  const [userName, setId] = useState(null)
+  const [userPassword, setPassword] = useState(null)
+  const loginInfo = {
+    userName,
+    userPassword
+  }
 
   return (
     <div>
@@ -17,7 +21,12 @@ export default function Login(){
       }}></input>
       <br/>
       <button onClick={()=>{
-        axios.post()
+        axios.post('http://localhost:8080/login', loginInfo)
+          .then((result) => {
+            console.log(result.data)
+          }).catch(() => {
+            console('실패함')
+          })
       }}>Login</button>
     </div>
   )

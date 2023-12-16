@@ -1,17 +1,20 @@
 package hyun.portfolio9.configures;
 
+import hyun.portfolio9.configures.auth.JwtAuthenticationManager;
 import hyun.portfolio9.filter.JwtAuthenticationFilter;
-import hyun.portfolio9.filter.TestFilter;
+import hyun.portfolio9.filter.JwtAuthorizationFilter;
+import hyun.portfolio9.repositories.UserRepository;
+import hyun.portfolio9.service.JwtProviderService;
+import jakarta.servlet.Filter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authorization.AuthorityAuthorizationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.context.SecurityContextPersistenceFilter;
 import org.springframework.web.filter.CorsFilter;
 
 @Configuration
@@ -20,26 +23,23 @@ import org.springframework.web.filter.CorsFilter;
 public class SecurityConfig {
     private final CorsFilter corsFilter;
     private final JwtAuthenticationManager jwtAuthenticationManager;
+    private final JwtProviderService jwtProviderService;
+    private final UserRepository userRepository;
+    private final AuthenticationManager authenticationManager;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         http
-//                .addFilterBefore(new TestFilter(), SecurityContextPersistenceFilter.class)
                 .csrf().disable()
                 .formLogin().disable()
                 .httpBasic().disable()
                 .addFilter(corsFilter)
-                .addFilter(new JwtAuthenticationFilter(jwtAuthenticationManager))
+                .addFilter(new JwtAuthenticationFilter(jwtAuthenticationManager, jwtProviderService))
+                .addFilter(new JwtAuthorizationFilter(jwtAuthenticationManager, jwtProviderService, userRepository))
                 .authorizeHttpRequests()
                 .requestMatchers(HttpMethod.GET, "/main/admin/**").hasRole("ADMIN")
                 .anyRequest().permitAll();
         return http.build();
     }
-
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-
 }
