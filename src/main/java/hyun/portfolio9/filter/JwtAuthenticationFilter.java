@@ -1,25 +1,31 @@
 package hyun.portfolio9.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import hyun.portfolio9.configures.auth.JwtAuthenticationManager;
 import hyun.portfolio9.configures.auth.PrincipalDetails;
 import hyun.portfolio9.entities.User;
 import hyun.portfolio9.service.JwtProviderService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import java.io.IOException;
+import java.util.Collection;
+import java.util.List;
 
-@RequiredArgsConstructor
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
-    private final JwtAuthenticationManager jwtAuthenticationManager;
+    private final AuthenticationManager authenticationManager;
     private final JwtProviderService jwtProviderService;
+
+    public JwtAuthenticationFilter(AuthenticationManager authenticationManager, JwtProviderService jwtProviderService) {
+        this.authenticationManager = authenticationManager;
+        this.jwtProviderService = jwtProviderService;
+    }
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
@@ -33,9 +39,10 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
             UsernamePasswordAuthenticationToken authenticationToken =
                     new UsernamePasswordAuthenticationToken(user.getUserName(), user.getUserPassword());
 
-            Authentication authentication = jwtAuthenticationManager.authenticate(authenticationToken);
+            Authentication authentication = authenticationManager.authenticate(authenticationToken);
 
             PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+
             System.out.println(principalDetails.getAuthorities() + "의 권한을 가지신 " + principalDetails.getUsername() + "님 로그인 감사합니다. ");
 
             return authentication;

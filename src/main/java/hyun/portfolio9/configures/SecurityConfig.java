@@ -1,17 +1,15 @@
 package hyun.portfolio9.configures;
 
-import hyun.portfolio9.configures.auth.JwtAuthenticationManager;
+import hyun.portfolio9.entities.references.Role;
 import hyun.portfolio9.filter.JwtAuthenticationFilter;
 import hyun.portfolio9.filter.JwtAuthorizationFilter;
 import hyun.portfolio9.repositories.UserRepository;
 import hyun.portfolio9.service.JwtProviderService;
-import jakarta.servlet.Filter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authorization.AuthorityAuthorizationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.web.SecurityFilterChain;
@@ -22,7 +20,6 @@ import org.springframework.web.filter.CorsFilter;
 @RequiredArgsConstructor
 public class SecurityConfig {
     private final CorsFilter corsFilter;
-    private final JwtAuthenticationManager jwtAuthenticationManager;
     private final JwtProviderService jwtProviderService;
     private final UserRepository userRepository;
     private final AuthenticationManager authenticationManager;
@@ -35,10 +32,10 @@ public class SecurityConfig {
                 .formLogin().disable()
                 .httpBasic().disable()
                 .addFilter(corsFilter)
-                .addFilter(new JwtAuthenticationFilter(jwtAuthenticationManager, jwtProviderService))
-                .addFilter(new JwtAuthorizationFilter(jwtAuthenticationManager, jwtProviderService, userRepository))
+                .addFilter(new JwtAuthenticationFilter(authenticationManager, jwtProviderService))
+                .addFilter(new JwtAuthorizationFilter(authenticationManager, jwtProviderService, userRepository))
                 .authorizeHttpRequests()
-                .requestMatchers(HttpMethod.GET, "/main/admin/**").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.GET, "/admin/**").hasRole("ADMIN")
                 .anyRequest().permitAll();
         return http.build();
     }

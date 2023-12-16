@@ -1,6 +1,5 @@
 package hyun.portfolio9.filter;
 
-import hyun.portfolio9.configures.auth.JwtAuthenticationManager;
 import hyun.portfolio9.configures.auth.PrincipalDetails;
 import hyun.portfolio9.entities.User;
 import hyun.portfolio9.repositories.UserRepository;
@@ -8,7 +7,6 @@ import hyun.portfolio9.service.JwtProviderService;
 import jakarta.servlet.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -18,11 +16,13 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 import java.io.IOException;
 
 public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
+    private final AuthenticationManager authenticationManager;
     private final JwtProviderService jwtProviderService;
     private final UserRepository userRepository;
 
-    public JwtAuthorizationFilter(JwtAuthenticationManager jwtAuthenticationManager, JwtProviderService jwtProviderService, UserRepository userRepository) {
-        super(jwtAuthenticationManager);
+    public JwtAuthorizationFilter(AuthenticationManager authenticationManager, JwtProviderService jwtProviderService, UserRepository userRepository) {
+        super(authenticationManager);
+        this.authenticationManager = authenticationManager;
         this.jwtProviderService = jwtProviderService;
         this.userRepository = userRepository;
     }
