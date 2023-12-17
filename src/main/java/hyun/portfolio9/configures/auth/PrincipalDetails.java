@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class PrincipalDetails implements UserDetails {
     private User user;
@@ -22,7 +23,6 @@ public class PrincipalDetails implements UserDetails {
         user.getRoleList().forEach(role -> {
             authorities.add(()->role);
         });
-
         return authorities;
     }
 

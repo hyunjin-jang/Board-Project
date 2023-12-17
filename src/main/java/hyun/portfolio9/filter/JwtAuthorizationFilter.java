@@ -48,6 +48,7 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
         if (username != null) {
             User entity = userRepository.findByUserName(username);
             PrincipalDetails principalDetails = new PrincipalDetails(entity);
+            System.out.println(principalDetails.getUsername() + "님의 저장된 유저 권한 : "+principalDetails.getAuthorities());
 
             Authentication authentication = new UsernamePasswordAuthenticationToken
                     (principalDetails, null, principalDetails.getAuthorities());

@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.parameters.P;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,10 +26,10 @@ public class UserControler {
         return userService.create(dto);
     }
 
-//    @PostMapping("/login")
-//    private void login() {
-//        System.out.println("Use Cotroller Login ");
-//    }
+    @PostMapping("/users/{username}")
+    private String fincByUsername(@PathVariable String username) {
+        return userRepository.findByUserName(username).getUserName();
+    }
 
     @GetMapping("/blob/{name}")
     private String blob(@PathVariable String name) {

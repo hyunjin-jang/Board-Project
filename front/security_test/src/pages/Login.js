@@ -23,9 +23,10 @@ export default function Login(){
       <button onClick={()=>{
         axios.post('http://localhost:8080/login', loginInfo)
           .then((result) => {
-            console.log(result.data)
+            console.log(result.headers.getAuthorization("Authorization"))
+            
           }).catch(() => {
-            console('실패함')
+            console.log('실패함')
           })
       }}>Login</button>
     </div>
