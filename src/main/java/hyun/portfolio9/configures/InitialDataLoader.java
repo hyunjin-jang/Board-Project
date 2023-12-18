@@ -18,7 +18,7 @@ public class InitialDataLoader {
     @Bean
     public CommandLineRunner initialize(UserRepository userRepository) {
         return args -> {
-            User admin = new User(1L, "admin", passwordEncoder.encode("1111"), "ADMIN, GUEST");
+            User admin = new User(1L, "admin", passwordEncoder.encode("1111"), Role.ADMIN);
             userRepository.save(admin);
         };
     }

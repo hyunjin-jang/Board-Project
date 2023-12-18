@@ -37,7 +37,7 @@ public class UserControler {
         if(user == null) {
             return "user정보 없음!";
         }
-        return user.getUserRole();
+        return user.getUserRole().toString();
     }
 
     @GetMapping("/hello")

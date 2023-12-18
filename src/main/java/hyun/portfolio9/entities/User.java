@@ -19,13 +19,6 @@ public class User {
     private Long userId;
     private String userName;
     private String userPassword;
-    private String userRole; // GUEST, ADMIN
-
-    public List<String> getRoleList() {
-        if (this.userRole.length() > 0) {
-            return Arrays.asList(this.userRole.split(","));
-        }
-        return new ArrayList<String>();
-    }
-
+    @Enumerated(EnumType.STRING)
+    private Role userRole; // GUEST, ADMIN
 }
