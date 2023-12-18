@@ -13,7 +13,12 @@ function App() {
       { login ? <Login/> : null }
 
       <h4 onClick={()=>{
-        axios.get('http://localhost:8080/hello')
+        console.log('Token   :  '+localStorage)
+        axios.post('http://localhost:8080/users/admin', {}, {
+          headers : {
+            Authorization: "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTcwMjkwMzAyOCwiZXhwIjoxNzAyOTA2NjI4fQ.yflzDeATdwz4e6wMv92-6OgrL94060IeEuLvy33oXB8"
+          }
+        })
           .then((result)=>{
             console.log(result.data)
             var target = document.getElementById('fail_page')
