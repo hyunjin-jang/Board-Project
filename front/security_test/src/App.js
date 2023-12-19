@@ -2,10 +2,12 @@ import Login from './pages/Login';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './App.css';
+import { useSelector } from 'react-redux';
 
 function App() {
   const [login, setLogin] = useState(false)
   const [data, setData] = useState('Security Context');
+  const token = useSelector((state)=>{ return state.token })
 
   return (
     <div className="App">
@@ -13,10 +15,9 @@ function App() {
       { login ? <Login/> : null }
 
       <h4 onClick={()=>{
-        console.log('Token   :  '+localStorage)
-        axios.post('http://localhost:8080/users/admin', {}, {
-          headers : {
-            Authorization: "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTcwMjkwMzAyOCwiZXhwIjoxNzAyOTA2NjI4fQ.yflzDeATdwz4e6wMv92-6OgrL94060IeEuLvy33oXB8"
+        axios.post('http://localhost:8080/users/admin',{},{
+          headers: {
+            'Authorization': token
           }
         })
           .then((result)=>{

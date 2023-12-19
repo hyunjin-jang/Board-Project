@@ -1,18 +1,18 @@
 import { configureStore, createSlice } from '@reduxjs/toolkit'
 
-const jwtToken = createSlice({
-  name : 'jwtToken',
+const token = createSlice({
+  name : 'token',
   initialState : null,
   reducers : {
-    setJwtToken(state, token){
+    setToken(state, token){
       return token.payload
     }
   }
 })
-export const { setJwtToken } = jwtToken.actions
+export const { setToken } = token.actions
 
 export default configureStore({
   reducer: { 
-    jwtToken : jwtToken.reducer
+    token : token.reducer
   }
 }) 

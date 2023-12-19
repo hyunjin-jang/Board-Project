@@ -26,6 +26,10 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http
+                .headers().addHeaderWriter(((request, response) -> {
+                   response.addHeader("Access-Control-Expose-Headers", "Authorization");
+                }));
 
         http
                 .csrf().disable()

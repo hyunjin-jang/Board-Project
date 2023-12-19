@@ -15,6 +15,10 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
 
     public String create(JoinDto dto) {
+        if(!(userRepository.findByUserName(dto.getUserName()) == null)){
+            return "이미 있는 아이디임";
+        }
+
         User user = new User();
         user.setUserName(dto.getUserName());
         user.setUserPassword(passwordEncoder.encode(dto.getUserPassword()));

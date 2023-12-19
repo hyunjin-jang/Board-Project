@@ -1,9 +1,12 @@
 import axios from 'axios';
 import React, { useState } from 'react';
+import { setToken } from '../store/store';
+import { useDispatch } from 'react-redux';
 
 export default function Login(){
   const [userName, setId] = useState(null)
   const [userPassword, setPassword] = useState(null)
+  const dispatch = useDispatch()
   const loginInfo = {
     userName,
     userPassword
@@ -22,8 +25,8 @@ export default function Login(){
       <br/>
       <button onClick={()=>{
         axios.post('http://localhost:8080/login', loginInfo)
-          .then((response) => {
-            console.log(response.data)
+          .then(response => {
+            dispatch(setToken(response.headers['authorization']))
           }).catch(() => {
             console.log('실패함')
           })
