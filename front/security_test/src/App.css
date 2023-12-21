@@ -1,3 +1,70 @@
 .App {
   text-align: center;
 }
+
+body {
+  background: #E9E9E9;
+  margin: 0px;
+ }
+
+ .clear {
+  clear: both;
+ }
+
+ .login-container {
+  position:absolute;
+  background: white;
+  box-shadow: 0 0 10px 1px #000;
+  left: 40%;
+  padding: 20px;
+  border-radius: 8px;
+  width: 350px;
+ }
+
+ .login-box {
+  margin-right: auto;
+  margin-left: auto;
+  width: 55%;
+  text-align: center;
+ }
+
+ label {
+  display: block;
+  text-align: left;
+  margin-bottom: 5px;
+  font-size: 12px;
+ }
+
+ form input {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 5px 8px;
+  border-radius: 8px;
+  border: 2px solid grey;
+ }
+
+ .btn {
+  padding: 5px;
+  border-radius: 15px;
+ }
+
+ .navbar-container {
+  background-color: #ffffff;
+  border-bottom: 1px solid #dddddd;
+  padding: 16px;
+ }
+
+ .navbar-container h4{
+  margin: 0px;
+ }
+
+ .auth h4 {
+  float: right;
+  margin-left: 16px;
+ }
+
+ .auth input{
+  float: right;
+  padding: 6px 16px;
+  border-radius: 8px;
+ }

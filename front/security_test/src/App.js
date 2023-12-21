@@ -1,23 +1,25 @@
 import Login from './pages/Login';
+import Navbar from './component/Navbar'
 import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Routes, Route, Link, useNavigate, Outlet } from 'react-router-dom'
 import axios from 'axios';
 import './App.css';
-import { useSelector } from 'react-redux';
 
 function App() {
-  const [login, setLogin] = useState(false)
+  const navigate = useNavigate()
   const [data, setData] = useState('Security Context');
-  const token = useSelector((state)=>{ return state.token })
+  const loginModal = useSelector((state)=>{ return state.loginModal })
 
   return (
     <div className="App">
-      <h4 onClick={()=>{ setLogin(!login) }}>Login</h4>
-      { login ? <Login/> : null }
+      <Navbar/>
+      {loginModal ? <Login/> : null}
 
       <h4 onClick={()=>{
         axios.post('http://localhost:8080/users/admin',{},{
           headers: {
-            'Authorization': token
+            'Authorization': localStorage.getItem('authorization')
           }
         })
           .then((result)=>{

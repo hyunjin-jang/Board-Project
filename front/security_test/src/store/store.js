@@ -1,18 +1,21 @@
 import { configureStore, createSlice } from '@reduxjs/toolkit'
 
-const token = createSlice({
-  name : 'token',
-  initialState : null,
+const loginModal = createSlice({
+  name : 'loginModal',
+  initialState : false,
   reducers : {
-    setToken(state, token){
-      return token.payload
+    setLoginModal(state){
+      return !state
     }
   }
 })
-export const { setToken } = token.actions
 
-export default configureStore({
+export const { setLoginModal } = loginModal.actions
+
+const store = configureStore({
   reducer: { 
-    token : token.reducer
+    loginModal : loginModal.reducer
   }
 }) 
+
+export default store
