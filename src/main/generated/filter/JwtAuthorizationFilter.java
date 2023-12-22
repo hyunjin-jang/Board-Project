@@ -1,4 +1,4 @@
-package hyun.portfolio9.filter;
+package filter;
 
 import hyun.portfolio9.configures.auth.PrincipalDetails;
 import hyun.portfolio9.entities.User;

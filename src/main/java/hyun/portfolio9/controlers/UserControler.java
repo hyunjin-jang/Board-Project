@@ -26,25 +26,6 @@ public class UserControler {
         return userService.create(dto);
     }
 
-    @PostMapping("/users/{username}")
-    private String fincByUsername(@PathVariable String username) {
-        return userRepository.findByUserName(username).getUserName();
-    }
-
-    @GetMapping("/blob/{name}")
-    private String blob(@PathVariable String name) {
-        User user = userRepository.findByUserName(name);
-        if(user == null) {
-            return "user정보 없음!";
-        }
-        return user.getUserRole().toString();
-    }
-
-    @GetMapping("/hello")
-    private String hello(){
-        return "HELLO";
-    }
-
     @GetMapping("/user")
     private String guest() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

@@ -1,8 +1,7 @@
 package hyun.portfolio9.configures;
 
-import hyun.portfolio9.entities.references.Role;
-import hyun.portfolio9.filter.JwtAuthenticationFilter;
-import hyun.portfolio9.filter.JwtAuthorizationFilter;
+import filter.JwtAuthenticationFilter;
+import filter.JwtAuthorizationFilter;
 import hyun.portfolio9.repositories.UserRepository;
 import hyun.portfolio9.service.JwtProviderService;
 import lombok.RequiredArgsConstructor;
