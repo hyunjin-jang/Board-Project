@@ -1,4 +1,4 @@
-package filter;
+package hyun.portfolio9.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import hyun.portfolio9.configures.auth.PrincipalDetails;

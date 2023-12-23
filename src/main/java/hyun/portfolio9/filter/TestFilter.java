@@ -1,4 +1,4 @@
-package filter;
+package hyun.portfolio9.filter;
 
 import jakarta.servlet.*;
 import jakarta.servlet.http.HttpServletRequest;

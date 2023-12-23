@@ -8,7 +8,6 @@ import './App.css';
 
 function App() {
   const navigate = useNavigate()
-  const [data, setData] = useState('Security Context');
   const loginModal = useSelector((state)=>{ return state.loginModal })
 
   return (
@@ -16,26 +15,7 @@ function App() {
       <Navbar/>
       {loginModal ? <Login/> : null}
 
-      <h4 onClick={()=>{
-        axios.post('http://localhost:8080/users/admin',{},{
-          headers: {
-            'Authorization': localStorage.getItem('authorization')
-          }
-        })
-          .then((result)=>{
-            console.log(result.data)
-            var target = document.getElementById('fail_page')
-            if (target) {
-              target.innerHTML = result.data;
-            }
-          }).catch(()=>{
-            console.log('fail')
-            var target = document.getElementById('fail_page')
-            if (target) {
-              target.innerHTML = "Sever Error";
-            }
-          })
-      }}>{ data }</h4>
+      
       <div id='fail_page'></div>
     </div>
   );
