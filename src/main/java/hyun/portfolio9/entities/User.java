@@ -21,4 +21,6 @@ public class User {
     private String userPassword;
     @Enumerated(EnumType.STRING)
     private Role userRole; // GUEST, ADMIN
+    @OneToMany(mappedBy = "user")
+    private List<Posts> postsList = new ArrayList<>();
 }

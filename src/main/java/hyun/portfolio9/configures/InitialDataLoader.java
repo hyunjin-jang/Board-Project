@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 @Configuration
@@ -18,7 +19,7 @@ public class InitialDataLoader {
     @Bean
     public CommandLineRunner initialize(UserRepository userRepository) {
         return args -> {
-            User admin = new User(1L, "admin", passwordEncoder.encode("1111"), Role.ADMIN);
+            User admin = new User(1L, "admin", passwordEncoder.encode("1111"), Role.ADMIN, new ArrayList<>());
             userRepository.save(admin);
         };
     }
