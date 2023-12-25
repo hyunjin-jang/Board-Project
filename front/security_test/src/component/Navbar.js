@@ -1,6 +1,6 @@
 import { Routes, Route, Link, useNavigate, Outlet } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
-import { setLoginModal, setLoginToken } from '../store/store';
+import { setJoinModal, setLoginModal, setLoginToken } from '../store/store';
 import { useEffect } from 'react';
 
 function Navbar(){
@@ -21,7 +21,8 @@ function Navbar(){
         { localStorage.getItem('authorization')==null ? 
         <>
           <h4 onClick={()=>{
-            
+            navigate('/join')
+            dispatch(setJoinModal(true))
           }}>회원가입</h4>
           <h4 onClick={()=>{
             navigate('/login')
@@ -31,6 +32,7 @@ function Navbar(){
           <h4 onClick={()=>{
             localStorage.removeItem('authorization')
             dispatch(setLoginToken(false))
+            navigate("/")
           }}>로그아웃</h4>
         }
         <h4>검색</h4>

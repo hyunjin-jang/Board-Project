@@ -1,5 +1,6 @@
 package hyun.portfolio9.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import hyun.portfolio9.entities.references.Role;
 import jakarta.persistence.*;
 import lombok.*;
@@ -19,8 +20,10 @@ public class User {
     private Long userId;
     private String userName;
     private String userPassword;
+    private String userBirth;
     @Enumerated(EnumType.STRING)
     private Role userRole; // GUEST, ADMIN
+    @JsonIgnore
     @OneToMany(mappedBy = "user")
     private List<Posts> postsList = new ArrayList<>();
 }

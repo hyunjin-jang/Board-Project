@@ -20,6 +20,7 @@ public class Posts {
     private String postTitle;
     private String postContent;
     private String postFile;
+    private Integer postCount;
     private LocalDateTime postCreateTime;
     private LocalDateTime postModifyTime;
     @ManyToOne

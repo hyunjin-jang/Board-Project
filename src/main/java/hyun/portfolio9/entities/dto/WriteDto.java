@@ -8,5 +8,5 @@ public class WriteDto {
     private String postTitle;
     private String postContent;
     private String postFile;
-    private User user;
+    private String jwToken;
 }
