@@ -39,6 +39,7 @@ export default function WirtePost(){
           if(token != null) {
             axios.post("http://localhost:8080/posts", postInfo)
             .then((response)=>{
+              console.log(response)
               navigate("/posts")
             })
           } else {

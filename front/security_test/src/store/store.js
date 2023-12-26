@@ -1,5 +1,4 @@
 import { configureStore, createSlice } from '@reduxjs/toolkit'
-import axios from 'axios'
 
 const loginToken = createSlice({
   name : 'loginToken',
@@ -31,6 +30,16 @@ const joinModal = createSlice({
   }
 })
 
+const postModal = createSlice({
+  name : 'postModal',
+  initialState : false,
+  reducers : {
+    setPostModal(state, action){
+      return action.payload
+    }
+  }
+})
+
 const postList = createSlice({
   name : 'postList',
   initialState : [],
@@ -44,6 +53,7 @@ const postList = createSlice({
 export const { setLoginToken } = loginToken.actions
 export const { setLoginModal } = loginModal.actions
 export const { setJoinModal } = joinModal.actions
+export const { setPostModal } = postModal.actions
 export const { setPostList } = postList.actions
 
 const store = configureStore({
@@ -51,6 +61,7 @@ const store = configureStore({
     loginModal : loginModal.reducer,
     loginToken : loginToken.reducer,
     joinModal : joinModal.reducer,
+    postModal : postModal.reducer,
     postList : postList.reducer
   }
 }) 

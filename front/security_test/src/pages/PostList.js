@@ -2,7 +2,7 @@ import axios from "axios"
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
-import { setPostList } from "../store/store"
+import { setLoginToken, setPostList } from "../store/store"
 
 export default function PostList(){
   const navigate = useNavigate()
@@ -15,6 +15,9 @@ export default function PostList(){
     axios.get("http://localhost:8080/posts")
     .then((response)=>{
       dispatch(setPostList(response.data))
+      if(localStorage.getItem("authorization")){
+        dispatch(setLoginToken(true))
+      }
     }).catch((error)=>{
     })
   }, [postCount])
@@ -24,7 +27,10 @@ export default function PostList(){
       <div className="main-box">
         <div className="clear"></div>
         {postList.map((postContent)=> (
-          <div key={postContent.postId} className="post-content">
+          <div key={postContent.postId} className="post-content" onClick={(e)=>{
+            let postIndex = postContent.postId - 1
+            navigate("/posts/" + postIndex)
+          }}>
             <img src={postContent.postFile}/>
             <h4>{postContent.postTitle}</h4>
             <h5>작성자 {postContent.user.userName}</h5>

@@ -1,13 +1,12 @@
 import { useState } from "react"
 import { useDispatch } from "react-redux"
-import { setJoinModal } from '../store/store';
+import { setJoinModal, setLoginModal } from '../store/store';
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 
 export default function Join(){
   const dispatch = useDispatch()
-  const navigate = useNavigate()
   const [userName, setJoinUserName] = useState()
   const [userPassword, setJoinPassword] = useState()
   const [userBirth, setJoinBirth] = useState()
@@ -23,7 +22,6 @@ export default function Join(){
       <div className="clear"></div>
       <h1 style={{float: "right", margin: "0px"}} onClick={()=>{
           dispatch(setJoinModal(false))
-          navigate(-1)
         }}>x</h1>
       <div className="clear"></div>
       <div className="join-box">
@@ -48,7 +46,7 @@ export default function Join(){
               .then((response)=>{
                 console.log(response.data)
                 dispatch(setJoinModal(false))
-                navigate('login')
+                dispatch(setLoginModal(true))
               }).catch((error)=>{
                 if(error.code == "ERR_BAD_REQUEST") {
                   console.log("중복 아이디 있음")

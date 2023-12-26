@@ -21,11 +21,9 @@ function Navbar(){
         { localStorage.getItem('authorization')==null ? 
         <>
           <h4 onClick={()=>{
-            navigate('/join')
             dispatch(setJoinModal(true))
           }}>회원가입</h4>
           <h4 onClick={()=>{
-            navigate('/login')
             dispatch(setLoginModal(true))
           }}>로그인</h4>
         </> :

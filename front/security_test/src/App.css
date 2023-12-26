@@ -106,8 +106,6 @@ body {
 
 .post-content {
     overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
     background: white;
     border-radius: 8px;
     float: left;
@@ -147,6 +145,12 @@ body {
 }
 
 .post-content h4 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 80%;
+  margin-right: auto;
+  margin-left: auto;
   margin-top: 1%;
   margin-bottom: 1%;
 }
@@ -203,3 +207,95 @@ body {
   border-radius: 15px;
 }
   
+/* 포스트 디테일 css */
+.detail-container {
+  text-align: center;
+ }
+
+ .detail-box {
+  background: #eee;
+  border-radius: 15px;
+  margin-right: auto;
+  margin-left: auto;
+  margin-top: 3rem;
+  padding: 1rem;
+  width: 70%;
+ }
+ 
+ .detail-box img {
+  border-radius: 15px;
+  float: left;
+  width: 50%;
+ }
+ 
+ @media screen and (max-width : 768px) {
+  .detail-box img {
+    border-radius: 15px;
+    float: left;
+    width: 100%;
+  }
+ }
+ 
+ .detail-content {
+  text-align: left;
+  float: left;
+  width: 50%;
+  padding: 1rem;
+ }
+ 
+ @media screen and (max-width : 768px) {
+  .detail-content {
+    text-align: left;
+    float: left;
+    width: 100%;
+    padding: 1rem;
+  }
+ }
+ 
+ .detail-content h3 {
+  margin-bottom: 0px;
+ }
+ 
+ .post-commentList {
+  width: 100%;
+  float: left;
+ }
+ 
+ .comment-btn {
+  width: 27%;
+  background: black;
+  color: white;
+  border-radius: 30px;
+  padding: 8px 16px;
+  border-radius: 0px 8px 8px 0px;
+ }
+ 
+ .comment-input {
+  box-sizing: border-box;
+  width: 73%;
+  padding: 8px 16px;
+  border-radius: 8px 0px 0px 8px;
+  margin-top: 1rem;
+  margin-bottom: 10px;
+ }
+ 
+ .post-commentList img {
+  background: blue;
+  padding: 10px;
+  border-radius: 30px;
+  width: 16px;
+  margin-right: 5px;
+ }
+ 
+ .post-commentList h5 {
+  float: left;
+  margin-top: 0;
+  font-size: 15px;
+ }
+ 
+ .post-commentList label {
+  float: left;
+  margin-top: 0;
+  margin-left: 5px;
+  font-size: 14px;
+ }

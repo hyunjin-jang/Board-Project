@@ -8,6 +8,7 @@ import axios from 'axios';
 import './App.css';
 import PostList from './pages/PostList';
 import WirtePost from './pages/WritePost';
+import DetailPost from './pages/DetailPost';
 
 function App() {
   const navigate = useNavigate()
@@ -17,17 +18,18 @@ function App() {
   return (
     <div className="App">
       <Navbar/>
+      {loginModal ? <Login/> : null}
+      {joinModal ? <Join/> : null}
       <Routes>
         <Route path='/' element={<div onClick={()=>{
           navigate("/posts")
         }}>Main Page</div>}/>
+        <Route path='/posts/:id' element={<DetailPost/>}/>
         <Route path='/posts' element={<PostList/>}/>
-        <Route path='/login' element={<Login/>}/>
-        <Route path='/join' element={<Join/>}/>
         <Route path='/write' element={<WirtePost/>}/>
       </Routes>
-      {joinModal ? <Join/> : null}
-      {loginModal ? <Login/> : null}
+      
+      
       <div id='fail_page'></div>
     </div>
   );

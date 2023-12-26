@@ -6,7 +6,6 @@ import { useNavigate } from 'react-router-dom';
 
 export default function Login(){
   const dispatch = useDispatch()
-  const navigate = useNavigate()
   const loginModal = useSelector((state)=> {return state.loginModal})
   const loginToken = useSelector((state)=> {return state.loginToken})
 
@@ -27,7 +26,6 @@ export default function Login(){
       
      <div className="clear"></div>
      <h1 style={{float: "right", margin: "0px"}} onClick={()=>{
-      navigate(-1)
       dispatch(setLoginModal(false))
      }}>x</h1>
      <div className="clear"></div>
@@ -40,7 +38,7 @@ export default function Login(){
           setUserName(e.target.value)
          }}></input>
          <label>비밀번호</label>
-         <input onChange={(e)=>{
+         <input type='password' onChange={(e)=>{
           setPassword(e.target.value)
          }}></input>
          <label style={{fontWeight: "bold"}}>비밀번호를 잊으셨나요?</label>
@@ -54,7 +52,6 @@ export default function Login(){
               localStorage.setItem("authorization", response.headers['authorization'])
               dispatch(setLoginModal(false))
               dispatch(setLoginToken(true))
-              navigate('/')
             }).catch((error)=>{
               let errorCode = error.code;
               if(errorCode == 'ERR_BAD_REQUEST'){
@@ -73,8 +70,6 @@ export default function Login(){
        <h5 className="btn" style={{background: "#21C148", color: "white"}}>라인 로그인</h5>
        <label>아직 Logo를 사용하고 있지 않으신가요?<span>가입하기</span></label>
      </div>
-     {userName}
-     {userPassword}
    </div>
   )
 }
