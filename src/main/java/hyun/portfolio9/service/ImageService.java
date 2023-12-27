@@ -11,6 +11,7 @@ import java.io.IOException;
 
 @Service
 public class ImageService {
+    @Value("${upload.path}")
     private String uploadPath;
 
     public ResponseEntity<String> uploadImage(MultipartFile file) {

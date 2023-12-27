@@ -21,6 +21,7 @@ public class Posts {
     private String postContent;
     private String postFile;
     private Integer postCount;
+    private String imagePath; //이미지 경로
     private LocalDateTime postCreateTime;
     private LocalDateTime postModifyTime;
     @ManyToOne

@@ -12,16 +12,37 @@ export default function WirtePost(){
   const token = localStorage.getItem('authorization')
   const jwToken = token.replace(/^Bearer\s/, '')
 
-  const postInfo = {
+  const writeDto = {
     postTitle,
     postContent,
-    postFile,
     jwToken 
+  }
+
+  const handleImageUpload = (e) =>{
+    setPostFile(e.target.files[0]);
+  }
+
+  const handleSubmit = async (e) =>{
+    if(token != null){
+      e.preventDefault();
+
+      const formData = new FormData()
+      formData.append('postFile' , postFile)
+      formData.append('writeDto' , writeDto)
+
+      try {
+      const response = await axios.post('http://localhost:8080/posts', formData);
+      console.log('Post created:', response.data);
+      // 처리 완료 후 필요한 동작 수행
+      } catch (error) {
+        console.error('Error creating post:', error);
+      }
+    }
   }
 
   return (
     <div className="write-container">
-      <div className="write-box">
+      <form onSubmit={handleSubmit} className="write-box">
         <h5>제목</h5>
         <input className="write-title" onChange={(e)=>{
             setPostTitle(e.target.value)
@@ -31,22 +52,10 @@ export default function WirtePost(){
             setPostContent(e.target.value)
           }}/>
         <br/>
-        <input type="file" onChange={(e)=>{
-            setPostFile(e.target.value)
-          }}></input>
+        <input type="file" onChange={handleImageUpload}></input>
         <br/>
-        <h5 className="write-btn" onClick={()=>{
-          if(token != null) {
-            axios.post("http://localhost:8080/posts", postInfo)
-            .then((response)=>{
-              console.log(response)
-              navigate("/posts")
-            })
-          } else {
-            console.log("Token 없음")
-          }
-        }}>작성하기</h5>
-      </div>
+        <button className="write-btn" type="submit">작성하기</button>
+      </form>
     </div>
   )
 }

@@ -9,6 +9,7 @@ import './App.css';
 import PostList from './pages/PostList';
 import WirtePost from './pages/WritePost';
 import DetailPost from './pages/DetailPost';
+import MyPage from './pages/MyPage';
 
 function App() {
   const navigate = useNavigate()
@@ -27,6 +28,7 @@ function App() {
         <Route path='/posts/:id' element={<DetailPost/>}/>
         <Route path='/posts' element={<PostList/>}/>
         <Route path='/write' element={<WirtePost/>}/>
+        <Route path='/mypage' element={<MyPage/>}/>
       </Routes>
       
       

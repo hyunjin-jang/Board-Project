@@ -7,6 +7,5 @@ import lombok.Data;
 public class WriteDto {
     private String postTitle;
     private String postContent;
-    private String postFile;
     private String jwToken;
 }

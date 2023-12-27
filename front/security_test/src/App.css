@@ -299,3 +299,65 @@ body {
   margin-left: 5px;
   font-size: 14px;
  }
+
+ /* 마이페이지 정보 CSS */
+ .mypage-container {
+  border: 1px solid black;
+}
+
+.profile-box {
+  background: white;
+  border-radius: 30px;
+  margin-right: auto;
+  margin-left: auto;
+  margin-top: 3rem;
+  padding: 1rem;
+  width: 70%;
+}
+
+.profile-top {
+  border-bottom: 3px solid black;
+  margin-bottom: 1rem;
+}
+
+.edit-btn {
+  float: right;
+  background: #E32C2C;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 8px;
+}
+
+.profile-box img {
+  width: 150px;
+  height: 150px;
+}
+
+.profile-img {
+  overflow: hidden;
+  width: 100px;
+  height: 100px;
+  border-radius: 50px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.profile-middle {
+  text-align: center;
+}
+
+ /* 내가 작성한 포스트 CSS */
+ .myposts-box {
+  background: white;
+  border-radius: 30px;
+  margin-right: auto;
+  margin-left: auto;
+  margin-top: 3rem;
+  width: 70%;
+ }
+ 
+ .myposts {
+  padding-left: 1rem;
+  text-align: left;
+ }
+ 

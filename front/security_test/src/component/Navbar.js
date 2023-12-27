@@ -27,11 +27,16 @@ function Navbar(){
             dispatch(setLoginModal(true))
           }}>로그인</h4>
         </> :
+        <>
           <h4 onClick={()=>{
             localStorage.removeItem('authorization')
             dispatch(setLoginToken(false))
             navigate("/")
           }}>로그아웃</h4>
+          <h4 onClick={()=>{
+            navigate("/mypage")
+          }}>마이페이지</h4>
+        </>
         }
         <h4>검색</h4>
         <input placeholder="검색"></input>
