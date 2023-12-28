@@ -31,7 +31,9 @@ export default function PostList(){
             let postIndex = postContent.postId - 1
             navigate("/posts/" + postIndex)
           }}>
-            <img src={postContent.postFile}/>
+            {postContent.postImageName && (
+              <img src={`http://localhost:8080/posts/image/${postContent.postImageName}`} alt="Post" />
+            )}
             <h4>{postContent.postTitle}</h4>
             <h5>작성자 {postContent.user.userName}</h5>
           </div>

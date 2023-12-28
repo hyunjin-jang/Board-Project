@@ -6,6 +6,8 @@ import hyun.portfolio9.entities.dto.WriteDto;
 import hyun.portfolio9.repositories.PostsRepository;
 import hyun.portfolio9.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.io.Resource;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -27,6 +29,7 @@ public class PostsService {
         Posts posts = new Posts();
         posts.setPostTitle(dto.getPostTitle());
         posts.setPostContent(dto.getPostContent());
+        posts.setPostImageName(dto.getPostImageName());
         posts.setPostCount(0);
         posts.setUser(findUser);
         posts.setPostCreateTime(LocalDateTime.now());
@@ -35,24 +38,16 @@ public class PostsService {
         return dto.getPostTitle() + " 작성 완료";
     }
 
-    public String postWriteImage(WriteDto dto, MultipartFile imageFile) {
-        String findName = jwtProviderService.validate(dto.getJwToken());
-        User findUser = userRepository.findByUserName(findName);
-
-        String imagePath = String.valueOf(imageService.uploadImage(imageFile));
-        Posts posts = new Posts();
-        posts.setPostTitle(dto.getPostTitle());
-        posts.setPostContent(dto.getPostContent());
-        posts.setImagePath(imagePath);
-        posts.setPostCount(0);
-        posts.setUser(findUser);
-        posts.setPostCreateTime(LocalDateTime.now());
-        postsRepository.save(posts);
-
-        return dto.getPostTitle() + " 작성 완료";
+    public String postUploadImage(MultipartFile imageFile) {
+        String imageName = String.valueOf(imageService.uploadImage(imageFile));
+        return imageName;
     }
 
     public List<Posts> postRead() {
         return postsRepository.findAll();
+    }
+
+    public ResponseEntity<Resource> postDownloadImage(String imageName) {
+        return imageService.downloadImage(imageName);
     }
 }

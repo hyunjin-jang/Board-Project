@@ -8,7 +8,9 @@ export default function DetailPost(){
   return (
     <div className="detail-container">
       <div className="detail-box">
-        <img src="C:\fakepath\image-1.png"/>
+        {postList[id].postImageName && (
+          <img src={`http://localhost:8080/posts/image/${postList[id].postImageName}`} alt="Post" />
+        )}
         <div className="detail-content">
           <h3>{postList[id].postTitle}</h3>
           <h5>{postList[id].postContent}</h5>

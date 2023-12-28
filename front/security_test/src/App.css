@@ -218,14 +218,14 @@ body {
   margin-right: auto;
   margin-left: auto;
   margin-top: 3rem;
-  padding: 1rem;
+  /* padding: 1rem; */
   width: 70%;
  }
  
  .detail-box img {
   border-radius: 15px;
   float: left;
-  width: 50%;
+  width: 45%;
  }
  
  @media screen and (max-width : 768px) {

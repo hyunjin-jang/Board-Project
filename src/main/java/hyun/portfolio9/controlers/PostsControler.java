@@ -5,6 +5,8 @@ import hyun.portfolio9.entities.dto.WriteDto;
 import hyun.portfolio9.repositories.PostsRepository;
 import hyun.portfolio9.service.PostsService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.io.Resource;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -17,15 +19,18 @@ public class PostsControler {
     private final PostsRepository postsRepository;
 
     @PostMapping("/posts/image")
-    public String writeImage(
-            @RequestParam("postFile") MultipartFile postFile,
-            @RequestParam("writeDto") WriteDto writeDto) {
-        return postsService.postWriteImage(writeDto, postFile);
+    public String uploadImage(@RequestParam("postFile") MultipartFile postFile) {
+        return postsService.postUploadImage(postFile);
     }
 
     @PostMapping("/posts")
     public String write(@RequestBody WriteDto dto) {
         return postsService.postWrite(dto);
+    }
+
+    @GetMapping("/posts/image/{imageName}")
+    public ResponseEntity<Resource> downloadImage(@PathVariable String imageName) {
+        return postsService.postDownloadImage(imageName);
     }
 
     @GetMapping("/posts")
