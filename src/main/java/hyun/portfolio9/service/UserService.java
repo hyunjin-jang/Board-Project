@@ -1,5 +1,6 @@
 package hyun.portfolio9.service;
 
+import hyun.portfolio9.entities.EditUserDto;
 import hyun.portfolio9.entities.User;
 import hyun.portfolio9.entities.dto.JoinDto;
 import hyun.portfolio9.entities.references.Role;
@@ -26,5 +27,13 @@ public class UserService {
         user.setUserRole(Role.GUEST);
         userRepository.save(user);
         return "create " + user.getUserRole();
+    }
+
+    public String editUser(EditUserDto dto) {
+        User user = new User();
+        user.setUserPassword(dto.getUserPassword());
+
+        userRepository.save(user);
+        return "수정 완료";
     }
 }

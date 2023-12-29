@@ -1,5 +1,6 @@
 package hyun.portfolio9.controlers;
 
+import hyun.portfolio9.entities.EditUserDto;
 import hyun.portfolio9.entities.User;
 import hyun.portfolio9.entities.dto.JoinDto;
 import hyun.portfolio9.entities.dto.LoginDto;
@@ -24,6 +25,11 @@ public class UserControler {
     @PostMapping("/user")
     private String create(@RequestBody JoinDto dto) {
         return userService.create(dto);
+    }
+
+    @PutMapping("/user")
+    private String editUser(EditUserDto dto) {
+        return userService.editUser(dto);
     }
 
     @GetMapping("/user")
