@@ -28,14 +28,18 @@ export default function PostList(){
         <div className="clear"></div>
         {postList.map((postContent)=> (
           <div key={postContent.postId} className="post-content" onClick={(e)=>{
-            let postIndex = postContent.postId - 1
+            let postIndex = postContent.postId
             navigate("/posts/" + postIndex)
           }}>
+            <div className="post-list-img">
             {postContent.postImageName && (
               <img src={`http://localhost:8080/posts/image/${postContent.postImageName}`} alt="Post" />
             )}
+            </div>
+            <div className="post-list-context">
             <h4>{postContent.postTitle}</h4>
             <h5>작성자 {postContent.user.userName}</h5>
+            </div>
           </div>
         ))}
         <div className="clear"></div>

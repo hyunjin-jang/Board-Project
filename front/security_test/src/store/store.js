@@ -1,5 +1,15 @@
 import { configureStore, createSlice } from '@reduxjs/toolkit'
 
+const userToken = createSlice({
+  name : 'userToken',
+  initialState : null,
+  reducers : {
+    setUserToken(state, action){
+      return action.payload
+    }
+  }
+})
+
 const loginToken = createSlice({
   name : 'loginToken',
   initialState : false,
@@ -50,6 +60,7 @@ const postList = createSlice({
   }
 })
 
+export const { setUserToken} = userToken.actions
 export const { setLoginToken } = loginToken.actions
 export const { setLoginModal } = loginModal.actions
 export const { setJoinModal } = joinModal.actions
@@ -58,6 +69,7 @@ export const { setPostList } = postList.actions
 
 const store = configureStore({
   reducer: { 
+    userToken : userToken.reducer,
     loginModal : loginModal.reducer,
     loginToken : loginToken.reducer,
     joinModal : joinModal.reducer,

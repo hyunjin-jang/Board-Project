@@ -2,6 +2,7 @@ import { Routes, Route, Link, useNavigate, Outlet } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
 import { setJoinModal, setLoginModal, setLoginToken } from '../store/store';
 import { useEffect } from 'react';
+import axios from 'axios';
 
 function Navbar(){
   const navigate = useNavigate()
@@ -31,6 +32,10 @@ function Navbar(){
           <h4 onClick={()=>{
             localStorage.removeItem('authorization')
             dispatch(setLoginToken(false))
+            axios.interceptors.request.use((config)=>{
+              delete config.headers["Authorization"]
+              return config
+            })
             navigate("/")
           }}>로그아웃</h4>
           <h4 onClick={()=>{

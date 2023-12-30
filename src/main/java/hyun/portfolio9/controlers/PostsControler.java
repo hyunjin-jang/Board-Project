@@ -37,4 +37,9 @@ public class PostsControler {
     public List<Posts> read() {
         return postsRepository.findAll();
     }
+
+    @DeleteMapping("/posts/{postId}")
+    public String postDelete(@PathVariable Long postId) {
+        return postsService.postDelete(postId);
+    }
 }

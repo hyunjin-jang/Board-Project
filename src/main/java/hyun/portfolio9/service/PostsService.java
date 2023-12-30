@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -49,5 +50,11 @@ public class PostsService {
 
     public ResponseEntity<Resource> postDownloadImage(String imageName) {
         return imageService.downloadImage(imageName);
+    }
+
+    public String postDelete(Long postId) {
+        Optional<Posts> findPost = postsRepository.findById(postId);
+        postsRepository.deleteById(postId);
+        return findPost.get().getPostTitle() + " 포스트를 삭제 했습니다.";
     }
 }
