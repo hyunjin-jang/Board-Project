@@ -1,6 +1,6 @@
 import { Routes, Route, Link, useNavigate, Outlet } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
-import { setJoinModal, setLoginModal, setLoginToken } from '../store/store';
+import { setJoinModal, setLoginModal, setLoginToken, setUserToken } from '../store/store';
 import { useEffect } from 'react';
 import axios from 'axios';
 
@@ -9,8 +9,10 @@ function Navbar(){
   const dispatch = useDispatch()
   const loginModal = useSelector((state)=> {return state.loginModal})
   const loginToken = useSelector((state)=> {return state.loginToken})
+  const userToken = useSelector((state)=>{ return state.userToken })
 
   useEffect(()=>{
+    dispatch(setUserToken(localStorage.getItem("authorization")))
   }, [loginModal, loginToken])
 
   return (
@@ -19,7 +21,7 @@ function Navbar(){
         navigate('/')
       }}>Logo</h4>
       <div className="auth">
-        { localStorage.getItem('authorization')==null ? 
+        { userToken == null ? 
         <>
           <h4 onClick={()=>{
             dispatch(setJoinModal(true))
@@ -31,7 +33,7 @@ function Navbar(){
         <>
           <h4 onClick={()=>{
             localStorage.removeItem('authorization')
-            dispatch(setLoginToken(false))
+            dispatch(setUserToken(null))
             axios.interceptors.request.use((config)=>{
               delete config.headers["Authorization"]
               return config

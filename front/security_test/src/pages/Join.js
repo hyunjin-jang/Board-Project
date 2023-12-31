@@ -45,10 +45,8 @@ export default function Join(){
             onClick={()=>{
               axios.post("http://localhost:8080/user", joinInfo)
               .then((response)=>{
-                console.log(response.data.headers)
+                localStorage.setItem("authorization", response.headers['authorization'])
                 dispatch(setJoinModal(false))
-                dispatch(setLoginToken(true))
-                // dispatch(setUserToken(response.data.headers.authorization))
               }).catch((error)=>{
                 if(error.code == "ERR_BAD_REQUEST") {
                   console.log("중복 아이디 있음")
