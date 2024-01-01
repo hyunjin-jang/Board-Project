@@ -17,44 +17,38 @@ export default function Join(){
     userPassword,
     userBirth
   }
+
+  function joinAction(){
+    axios.post("http://localhost:8080/user", joinInfo)
+    .then((response)=>{
+      localStorage.setItem("authorization", response.headers['authorization'])
+      dispatch(setUserToken(localStorage.getItem('authorization')))
+      dispatch(setJoinModal(false))
+    }).catch((error)=>{
+      if(error.code == "ERR_BAD_REQUEST") {
+        console.log("중복 아이디 있음")
+      } else {
+        console.log("error발생")
+      }
+    })
+  }
   
   return (
     <div className="join-container">
       <div className="clear"></div>
-      <h1 style={{float: "right", margin: "0px"}} onClick={()=>{
-          dispatch(setJoinModal(false))
-        }}>x</h1>
+      <h1 style={{float: "right", margin: "0px"}} onClick={()=>{ dispatch(setJoinModal(false)) }}>x</h1>
       <div className="clear"></div>
       <div className="join-box">
         <h3 style={{marginTop: "0px"}}>Logo</h3>
         <h3>더 많은 내용을 보고려면 로그인하세요.</h3>
         <form>
           <label>이메일</label>
-          <input onChange={(e)=>{
-            setJoinUserName(e.target.value)
-          }}></input>
+          <input onChange={(e)=>{ setJoinUserName(e.target.value) }}></input>
           <label>비밀번호</label>
-          <input type="password" onChange={(e)=>{
-            setJoinPassword(e.target.value)
-         }}></input>
+          <input type="password" onChange={(e)=>{ setJoinPassword(e.target.value) }}></input>
           <label>생년월일</label>
-          <input type="date" onChange={(e)=>{
-            setJoinBirth(e.target.value)
-         }}></input>
-          <h5 className="btn" style={{background: "#E32C2C", color: "white"}} 
-            onClick={()=>{
-              axios.post("http://localhost:8080/user", joinInfo)
-              .then((response)=>{
-                localStorage.setItem("authorization", response.headers['authorization'])
-                dispatch(setJoinModal(false))
-              }).catch((error)=>{
-                if(error.code == "ERR_BAD_REQUEST") {
-                  console.log("중복 아이디 있음")
-                } else {
-                  console.log("error발생")
-                }
-              })
-            }}>가입하기</h5>
+          <input type="date" onChange={(e)=>{ setJoinBirth(e.target.value) }}></input>
+          <h5 className="btn" style={{background: "#E32C2C", color: "white"}} onClick={ joinAction }>가입하기</h5>
         </form>
         <h5>또는</h5>
         <h5 className="btn" style={{background: "#2C80DE", color: "white"}}>페북 로그인</h5>

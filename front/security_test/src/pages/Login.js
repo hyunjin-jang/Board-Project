@@ -1,13 +1,11 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setLoginModal, setLoginToken } from '../store/store';
-import { useNavigate } from 'react-router-dom';
+import { setLoginModal, setUserToken } from '../store/store';
 
 export default function Login(){
   const dispatch = useDispatch()
   const loginModal = useSelector((state)=> {return state.loginModal})
-  const loginToken = useSelector((state)=> {return state.loginToken})
 
   const [userName, setUserName] = useState(null)
   const [userPassword, setPassword] = useState(null)
@@ -17,52 +15,44 @@ export default function Login(){
     userPassword
   }
 
-  useEffect(()=>{
-    console.log(loginToken)
-  }, [loginModal, loginToken])
+  async function loginAction(){
+    axios.post("http://localhost:8080/login", loginInfo)
+    .then((response)=>{
+      localStorage.setItem("authorization", response.headers['authorization'])
+      dispatch(setUserToken(localStorage.getItem('authorization')))
+      dispatch(setLoginModal(false))
+    }).catch((error)=>{
+      let errorCode = error.code;
+      if(errorCode == 'ERR_BAD_REQUEST'){
+        document.getElementById('login-error').innerHTML = "<b>이메일 또는 이메일이 잘못되었습니다.</b>"
+      } else if(errorCode == 'ERR_NETWORK') {
+        document.getElementById('login-error').innerHTML = "<b>서버 에러.</b>"
+      } else {
+        console.log("리액트 문법 돌아보삼")
+      }
+    })
+  }
 
   return (
     <div className="login-container">
       
      <div className="clear"></div>
-     <h1 style={{float: "right", margin: "0px"}} onClick={()=>{
-      dispatch(setLoginModal(false))
-     }}>x</h1>
+     <h1 style={{float: "right", margin: "0px"}} onClick={()=>{ dispatch(setLoginModal(false)) }}>x</h1>
      <div className="clear"></div>
      <div className="login-box">
        <h3 style={{marginTop: "0px"}}>Logo</h3>
        <h3>더 많은 내용을 보고려면 로그인하세요.</h3>
        <form>
          <label>이메일</label>
-         <input onChange={(e)=>{
-          setUserName(e.target.value)
-         }}></input>
+         <input onChange={(e)=>{ setUserName(e.target.value) }}></input>
          <label>비밀번호</label>
-         <input type='password' onChange={(e)=>{
-          setPassword(e.target.value)
-         }}></input>
+         <input type='password' onChange={(e)=>{ setPassword(e.target.value) }}></input>
          <label style={{fontWeight: "bold"}}>비밀번호를 잊으셨나요?</label>
 
          <div id='login-error'></div>
 
          <h5 className="btn" style={{background: "#E32C2C", color: "white"}}
-          onClick={()=>{
-            axios.post("http://localhost:8080/login", loginInfo)
-            .then((response)=>{
-              localStorage.setItem("authorization", response.headers['authorization'])
-              dispatch(setLoginModal(false))
-              dispatch(setLoginToken(true))
-            }).catch((error)=>{
-              let errorCode = error.code;
-              if(errorCode == 'ERR_BAD_REQUEST'){
-                document.getElementById('login-error').innerHTML = "<b>이메일 또는 이메일이 잘못되었습니다.</b>"
-              } else if(errorCode == 'ERR_NETWORK') {
-                document.getElementById('login-error').innerHTML = "<b>서버 에러.</b>"
-              } else {
-                console.log("리액트 문법 돌아보삼")
-              }
-            })
-          }}>로그인</h5>
+          onClick={ loginAction }>로그인</h5>
        </form>
        <h5>또는</h5>
        <h5 className="btn" style={{background: "#2C80DE", color: "white"}}>페북 로그인</h5>

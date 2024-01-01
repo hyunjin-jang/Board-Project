@@ -32,7 +32,7 @@ public class UserService {
         userRepository.save(user);
 
         String jwtToken = jwtProviderService.create(user.getUserName());
-        response.addHeader("Authorization", "Bearer " + jwtToken);;
+        response.addHeader("Authorization", "Bearer " + jwtToken);
         return "create " + user.getUserRole();
     }
 
