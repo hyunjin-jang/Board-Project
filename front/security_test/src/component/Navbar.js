@@ -11,7 +11,6 @@ function Navbar(){
 
   function logoutAction(){
     localStorage.removeItem('authorization')
-    dispatch(setUserToken(null))
     navigate("/")
   }
   
@@ -21,7 +20,7 @@ function Navbar(){
         navigate('/')
       }}>Logo</h4>
       <div className="auth">
-        { userToken == null ? 
+        { localStorage.getItem('authorization') == null ? 
         <>
           <h4 onClick={()=>{ dispatch(setJoinModal(true)) }}>회원가입</h4>
           <h4 onClick={()=>{ dispatch(setLoginModal(true)) }}>로그인</h4>

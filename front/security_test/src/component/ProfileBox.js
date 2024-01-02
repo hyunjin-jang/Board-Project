@@ -1,6 +1,5 @@
 import axios from "axios"
-import { useState } from "react"
-import { useSelector } from "react-redux"
+import { useEffect, useState } from "react"
 
 export default function ProfileBox(){
 
@@ -10,21 +9,20 @@ export default function ProfileBox(){
   const [userPhone, setUserPhone] = useState("-")
   const [userAddress, setUserAddress] = useState("-")
 
-  // const userToken = useSelector((state)=>{ return state.userToken})
-
-  // axios.interceptors.request.use((config)=>{
-  //   config.headers.setAuthorization(userToken)
-  //   return config
-  // })
-
-  // axios.get('http://localhost:8080/user') 
-  //   .then((response)=>{
-  //     if(response.data.userName != null){setUserName(response.data.userName)}
-  //     if(response.data.userBirth != null){setUserBirth(response.data.userBirth)}
-  //     if(response.data.userEmail != null){setUserEmail(response.data.user.Email)}
-  //     if(response.data.userPhone != null){setUserPhone(response.data.userPhone)}
-  //     if(response.data.userAddress != null){setUserAddress(response.data.userAddress)}
-  //   })
+  useEffect(()=>{
+    axios.defaults.headers.common.Authorization = localStorage.getItem('authorization')
+    axios.get('http://localhost:8080/user') 
+    .then((response)=>{
+      setUserName(response.data.userName)
+      setUserBirth(response.data.userBirth)
+      if(userEmail!=null){ setUserEmail(response.data.userEmail) }
+      if(userPhone!=null){ setUserPhone(response.data.userPhone) }
+      if(userAddress!=null){ setUserAddress(response.data.userAddress) }
+    }).catch((error)=>{
+      console.log("axios error start!")
+      console.log(error)
+    })
+  })
   
 
   return (

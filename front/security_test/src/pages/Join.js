@@ -1,12 +1,9 @@
 import { useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { setJoinModal, setLoginModal, setLoginToken, setUserToken } from '../store/store';
+import { setJoinModal, setUserToken } from '../store/store';
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
-
 
 export default function Join(){
-  const userToken = useSelector((state)=>{return state.userToken})
   const dispatch = useDispatch()
   const [userName, setJoinUserName] = useState()
   const [userPassword, setJoinPassword] = useState()
@@ -22,7 +19,6 @@ export default function Join(){
     axios.post("http://localhost:8080/user", joinInfo)
     .then((response)=>{
       localStorage.setItem("authorization", response.headers['authorization'])
-      dispatch(setUserToken(localStorage.getItem('authorization')))
       dispatch(setJoinModal(false))
     }).catch((error)=>{
       if(error.code == "ERR_BAD_REQUEST") {

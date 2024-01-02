@@ -4,6 +4,7 @@ import hyun.portfolio9.entities.Posts;
 import hyun.portfolio9.entities.dto.WriteDto;
 import hyun.portfolio9.repositories.PostsRepository;
 import hyun.portfolio9.service.PostsService;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.Resource;
 import org.springframework.http.ResponseEntity;
@@ -19,13 +20,14 @@ public class PostsControler {
     private final PostsRepository postsRepository;
 
     @PostMapping("/posts/image")
-    public String uploadImage(@RequestParam("postFile") MultipartFile postFile) {
-        return postsService.postUploadImage(postFile);
+    public List<String> uploadImage(@RequestParam List<MultipartFile> files) {
+        return postsService.postUploadImage(files);
     }
 
     @PostMapping("/posts")
-    public String write(@RequestBody WriteDto dto) {
-        return postsService.postWrite(dto);
+    public String write(@RequestBody WriteDto dto, HttpServletRequest http) {
+        System.out.println("이미지 이름들 저장  " + dto.getPostImageNames());
+        return postsService.postWrite(dto, http);
     }
 
     @GetMapping("/posts/image/{imageName}")

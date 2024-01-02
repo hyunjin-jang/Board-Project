@@ -46,7 +46,6 @@ public class UserService {
         responseUser.setUserName(findUser.getUserName());
         responseUser.setUserBirth(findUser.getUserBirth());
         // 이메일, 전번, 주소는 엔티티에 아직 안만들었음 만들면 추가 하도록!
-        System.out.println(responseUser.getUserName());
         return responseUser;
     }
 

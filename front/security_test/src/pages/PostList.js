@@ -45,7 +45,7 @@ export default function PostList(){
         <div className="clear"></div>
 
         {
-          loginToken ?
+          localStorage.getItem('authorization') != null ?
           <button onClick={()=>{ navigate("/write") }}>글쓰기</button> :
           null
         }

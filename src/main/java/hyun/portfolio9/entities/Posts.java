@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @AllArgsConstructor
@@ -20,7 +21,7 @@ public class Posts {
     private String postTitle;
     private String postContent;
     private Integer postCount;
-    private String postImageName; //이미지 경로
+    private List<String> postImageNames; //이미지 이름
     private LocalDateTime postCreateTime;
     private LocalDateTime postModifyTime;
     @ManyToOne

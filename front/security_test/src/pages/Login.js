@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setLoginModal, setUserToken } from '../store/store';
+import { setLoginModal } from '../store/store';
 
 export default function Login(){
   const dispatch = useDispatch()
@@ -19,7 +19,6 @@ export default function Login(){
     axios.post("http://localhost:8080/login", loginInfo)
     .then((response)=>{
       localStorage.setItem("authorization", response.headers['authorization'])
-      dispatch(setUserToken(localStorage.getItem('authorization')))
       dispatch(setLoginModal(false))
     }).catch((error)=>{
       let errorCode = error.code;
