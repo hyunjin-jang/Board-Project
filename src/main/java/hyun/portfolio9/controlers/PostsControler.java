@@ -1,6 +1,7 @@
 package hyun.portfolio9.controlers;
 
 import hyun.portfolio9.entities.Posts;
+import hyun.portfolio9.entities.dto.ResponsePostFindByIdDto;
 import hyun.portfolio9.entities.dto.WriteDto;
 import hyun.portfolio9.repositories.PostsRepository;
 import hyun.portfolio9.service.PostsService;
@@ -36,8 +37,13 @@ public class PostsControler {
     }
 
     @GetMapping("/posts")
-    public List<Posts> read() {
+    public List<Posts> postsRead() {
         return postsRepository.findAll();
+    }
+
+    @GetMapping("/posts/{postId}")
+    public ResponsePostFindByIdDto postRead(@PathVariable Long postId) {
+        return postsService.findById(postId);
     }
 
     @DeleteMapping("/posts/{postId}")

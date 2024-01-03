@@ -7,11 +7,7 @@ export default function WirtePost(){
 
   const [postTitle, setPostTitle] = useState()
   const [postContent, setPostContent] = useState()
-  // const [postImagesNames, setPostImagesNames] = useState()
   const files = new FormData()
-
-  // const token = localStorage.getItem('authorization')
-  // const jwToken = token.replace(/^Bearer\s/, '')
 
   const writeDto = {
     postTitle,

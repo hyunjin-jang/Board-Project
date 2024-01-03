@@ -7,7 +7,6 @@ import { setLoginToken, setPostList } from "../store/store"
 export default function PostList(){
   const navigate = useNavigate()
   const dispatch = useDispatch()
-  const loginToken = useSelector((state)=> {return state.loginToken})
   const postList = useSelector((state)=> {return state.postList})
   const [postCount] = useState(postList.length)
 
@@ -22,33 +21,44 @@ export default function PostList(){
     })
   }, [postCount])
 
+  function posting(postContent){
+    return (
+      <div key={postContent.postId} className="post-content" 
+        onClick={(e)=>{
+          let postIndex = postContent.postId
+          navigate("/posts/" + postIndex)
+        }}>
+        <div className="post-list-img">
+          {
+            postContent.postImageNames ? 
+            <img src={`http://localhost:8080/posts/image/${postContent.postImageNames[0]}`} alt="Post" /> :
+            null
+          }
+        </div>
+        <div className="post-list-context">
+          <h4>{postContent.postTitle}</h4>
+          <h5>작성자 {postContent.user.userName}</h5>
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div className="post-container">
       <div className="main-box">
         <div className="clear"></div>
         {postList.map((postContent)=> (
-          <div key={postContent.postId} className="post-content" onClick={(e)=>{
-            let postIndex = postContent.postId
-            navigate("/posts/" + postIndex)
-          }}>
-            <div className="post-list-img">
-            {postContent.postImageName && (
-              <img src={`http://localhost:8080/posts/image/${postContent.postImageName}`} alt="Post" />
-            )}
-            </div>
-            <div className="post-list-context">
-            <h4>{postContent.postTitle}</h4>
-            <h5>작성자 {postContent.user.userName}</h5>
-            </div>
-          </div>
+          posting(postContent)
         ))}
         <div className="clear"></div>
-
-        {
-          localStorage.getItem('authorization') != null ?
-          <button onClick={()=>{ navigate("/write") }}>글쓰기</button> :
-          null
-        }
+        <button onClick={()=>{ 
+          if(localStorage.getItem('authorization') != null){
+            navigate("/write") 
+          } else {
+            alert('로그인하세요')
+          }
+          
+        }}>글쓰기</button>
       </div> 
     </div>
   )

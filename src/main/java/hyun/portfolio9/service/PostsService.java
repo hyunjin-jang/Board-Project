@@ -2,6 +2,7 @@ package hyun.portfolio9.service;
 
 import hyun.portfolio9.entities.Posts;
 import hyun.portfolio9.entities.User;
+import hyun.portfolio9.entities.dto.ResponsePostFindByIdDto;
 import hyun.portfolio9.entities.dto.WriteDto;
 import hyun.portfolio9.repositories.PostsRepository;
 import hyun.portfolio9.repositories.UserRepository;
@@ -63,5 +64,18 @@ public class PostsService {
         Optional<Posts> findPost = postsRepository.findById(postId);
         postsRepository.deleteById(postId);
         return findPost.get().getPostTitle() + " 포스트를 삭제 했습니다.";
+    }
+
+    public ResponsePostFindByIdDto findById(Long postId) {
+        Optional<Posts> findPost = postsRepository.findById(postId);
+        ResponsePostFindByIdDto dto = new ResponsePostFindByIdDto();
+        dto.setPostTitle(findPost.get().getPostTitle());
+        dto.setPostContent(findPost.get().getPostContent());
+        dto.setPostCount(findPost.get().getPostCount());
+        dto.setPostImageNames(findPost.get().getPostImageNames());
+        dto.setPostCreateTime(findPost.get().getPostCreateTime());
+        dto.setPostModifyTime(findPost.get().getPostModifyTime());
+        dto.setUserName(findPost.get().getUser().getUserName());
+        return dto;
     }
 }

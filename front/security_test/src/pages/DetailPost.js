@@ -1,64 +1,76 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux"
 import { useNavigate, useParams } from "react-router-dom"
 
 export default function DetailPost(){
   const navigate = useNavigate()
-  const postList = useSelector((state)=>{return state.postList})
-  const [loginUser, setLoginUser] = useState()
-  const {id} = useParams();
-
-  
+  const {id} = useParams()
+  const [posting, setPosting] = useState()
+  const [images, setImages] = useState()
   
   useEffect(()=>{
-    const token = localStorage.getItem('authorization')
-    
-    axios.interceptors.request.use((config)=>{
-      config.headers["Authorization"] = token
-      return config
+    axios.get('http://localhost:8080/posts/'+(id))
+    .then((response)=>{
+      setPosting(response.data)
+      setImages(response.data.postImageNames)
     })
-  })
-
-  axios.get("http://localhost:8080/user").then((response)=>{
-
-    setLoginUser(response.data.userName)
-  })
+  }, [])
 
   function postDelete(){
-    axios.delete("http://localhost:8080/posts/"+(id+1))
+    axios.delete("http://localhost:8080/posts/"+(id))
     .then((response)=>{
       navigate(-1)
-      console.log(response.data)
     }).catch((error)=>{
       console.log(error)
     })
   }
 
+  
+
   return (
     <div className="detail-container">
       <div className="detail-box">
-        {postList[id].postImageName && (
-          <img src={`http://localhost:8080/posts/image/${postList[id].postImageName}`} alt="Post" />
-        )}
-        <div className="detail-content">
-          { postList[id].user.userName == loginUser ?
+        <div className="slide-box">
+          <div className="slide-container">
+            { posting ?
+              images.map((imageName, id)=>{
+                return <img 
+                  key={id} 
+                  src={`http://localhost:8080/posts/image/${imageName}`}
+                  alt="Post" 
+                  onClick={()=>{
+                    console.log(id)
+                    document.getElementsByClassName('slide-container')[0].style.transform = 'translateX(-650px)';
+                  }}
+                />
+              }):
+              null
+            }
+          </div>
+        </div>
+        <div className="detail-content"> 
+          {/* { postList[id].user.userName == loginUser ?
           <>
             <button>수정</button>
             <button onClick={postDelete}>삭제</button>
           </> :
           null
+          } */}
+          {
+            posting ?
+            <>
+              <h3>{posting.postTitle}</h3>
+              <h5>{posting.postContent}</h5>
+              <h5>{posting.postCreateTime}</h5>
+              <h5>{posting.userName}</h5>
+            </> :
+            <p>Loding...</p>
           }
-          
-          <h3>{postList[id].postTitle}</h3>
-          <h5>{postList[id].postContent}</h5>
-          <h5>{postList[id].postCreateTime}</h5>
-          <h5>{postList[id].user.userName}</h5>
           <h3>댓글</h3>
           <input className="comment-input" placeholder="댓글을 적어보세요"/>
           <button className="comment-btn">작성</button>
         </div>
-        <div className="clear"></div>
+
       </div>
     </div>
   )
