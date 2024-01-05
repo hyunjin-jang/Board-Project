@@ -12,14 +12,23 @@ body {
  }
 
  /* 로그인 CSS */
+.black-bg {
+  background : rgba(0,0,0,0.5);
+  position : fixed;
+  width: 100vw;
+  height: 100vw;
+}
+
  .login-container {
   position:absolute;
   background: white;
   box-shadow: 0 0 10px 1px #000;
+  top: 5%;
   left: 40%;
   padding: 20px;
   border-radius: 8px;
   width: 350px;
+  z-index: 6;
  }
 
  .login-box {
@@ -76,10 +85,12 @@ body {
   position:absolute;
   background: white;
   box-shadow: 0 0 10px 1px #000;
+  top: 5%;
   left: 40%;
   padding: 20px;
   border-radius: 16px;
   width: 350px;
+  z-index: 6;
 }
 
 
@@ -188,7 +199,7 @@ body {
 
  /* 마이페이지 정보 CSS */
  .mypage-container {
-  border: 1px solid black;
+  /* border: 1px solid black; */
 }
 
 .profile-box {
@@ -261,12 +272,6 @@ body {
   width: 4000px;
   transition: all 1s;
 }
-
-/* .slide-container {
-  width: 4000px;
-  transition: all 1s;
-  transform: translateX(-650px);
-}  */
 
 .slide-box {
   width: 650px;

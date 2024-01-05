@@ -5,6 +5,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Getter
 public class LoginDto {
-    private String userName;
+    private String userNickName;
     private String userPassword;
 }

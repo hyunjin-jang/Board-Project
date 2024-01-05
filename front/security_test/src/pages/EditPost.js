@@ -1,19 +1,34 @@
 import axios from "axios"
 import { useState, useEffect } from "react"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 
-export default function WirtePost(){
+export default function EditPost(){
   const navigate = useNavigate()
-
+  const {id} = useParams()
   const [postTitle, setPostTitle] = useState()
   const [postContent, setPostContent] = useState()
+  const [postId, setPostId] = useState(id)
   const files = new FormData()
 
-  const writeDto = {
+  const [getPostTitle, setGetPostTitle] = useState()
+  const [getPostContent, setGetPostContent] = useState()
+
+  const editPostDto = {
+    postId,
     postTitle,
-    postContent,
-    
+    postContent, 
   }
+
+  useEffect(()=>{
+    
+    axios.get('http://localhost:8080/posts/'+(id))
+    .then((response)=>{
+      setGetPostTitle(response.data.postTitle)
+      setGetPostContent(response.data.postContent)
+      setPostTitle(response.data.postTitle);
+      setPostContent(response.data.postContent)
+    })
+  }, [])
 
   const handleImageUpload = (e) =>{
     for (let i=0; i < e.target.files.length; i++){
@@ -27,9 +42,9 @@ export default function WirtePost(){
     await axios.post('http://localhost:8080/posts/image', files)
     .then((response)=>{
       let ImageNames = response.data
-      writeDto.postImageNames = ImageNames
+      editPostDto.postImageNames = ImageNames
       
-      axios.post('http://localhost:8080/posts', writeDto)
+      axios.put('http://localhost:8080/posts', editPostDto)
       .then((response)=>{
         console.log(response.data)
         navigate('/')
@@ -45,9 +60,9 @@ export default function WirtePost(){
     <div className="write-container">
       <form onSubmit={ handleSubmit } className="write-box">
         <h5>제목</h5>
-        <input className="write-title" onChange={(e)=>{ setPostTitle(e.target.value) }}></input>
+        <input className="write-title" value={getPostTitle} onChange={(e)=>{ setPostTitle(e.target.value) }}></input>
         <h5>내용</h5>
-        <textarea onChange={(e)=>{ setPostContent(e.target.value) }}/>
+        <textarea value={getPostContent} onChange={(e)=>{ setPostContent(e.target.value) }}/>
         <br/>
         <input type="file" multiple name="files" onChange={ handleImageUpload }/>
         <br/>

@@ -4,6 +4,7 @@ import hyun.portfolio9.entities.Posts;
 import hyun.portfolio9.entities.User;
 import hyun.portfolio9.entities.dto.ResponsePostFindByIdDto;
 import hyun.portfolio9.entities.dto.WriteDto;
+import hyun.portfolio9.entities.dto.editPostDto;
 import hyun.portfolio9.repositories.PostsRepository;
 import hyun.portfolio9.repositories.UserRepository;
 import jakarta.servlet.http.HttpServletRequest;
@@ -29,7 +30,7 @@ public class PostsService {
     public String postWrite(WriteDto dto, HttpServletRequest http) {
         String jwt = http.getHeader("Authorization").replace("Bearer ", "");
         String findName = jwtProviderService.validate(jwt);
-        User findUser = userRepository.findByUserName(findName);
+        User findUser = userRepository.findByUserNickName(findName);
 
         Posts posts = new Posts();
         posts.setPostTitle(dto.getPostTitle());
@@ -75,7 +76,27 @@ public class PostsService {
         dto.setPostImageNames(findPost.get().getPostImageNames());
         dto.setPostCreateTime(findPost.get().getPostCreateTime());
         dto.setPostModifyTime(findPost.get().getPostModifyTime());
-        dto.setUserName(findPost.get().getUser().getUserName());
+        dto.setUserNickName(findPost.get().getUser().getUserNickName());
         return dto;
+    }
+
+    public String postEdit(editPostDto dto, HttpServletRequest http) {
+        String jwt = http.getHeader("Authorization").replace("Bearer ", "");
+        Optional<Posts> findPost = postsRepository.findById(dto.getPostId());
+        String findName = jwtProviderService.validate(jwt);
+        User findUser = userRepository.findByUserNickName(findName);
+
+        Posts posts = new Posts(
+                dto.getPostId(),
+                dto.getPostTitle(),
+                dto.getPostContent(),
+                findPost.get().getPostCount(),
+                dto.getPostImageNames(),
+                findPost.get().getPostCreateTime(),
+                LocalDateTime.now(),
+                findUser
+                );
+        postsRepository.save(posts);
+        return "수정 완료!";
     }
 }

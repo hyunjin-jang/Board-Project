@@ -18,9 +18,12 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
-    private String userName;
+    private String userNickName;
     private String userPassword;
     private String userBirth;
+    private String userEmail;
+    private String userPhone;
+    private String userAddress;
     @Enumerated(EnumType.STRING)
     private Role userRole; // GUEST, ADMIN
     @JsonIgnore

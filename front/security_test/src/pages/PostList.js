@@ -37,7 +37,7 @@ export default function PostList(){
         </div>
         <div className="post-list-context">
           <h4>{postContent.postTitle}</h4>
-          <h5>작성자 {postContent.user.userName}</h5>
+          <h5>작성자 {postContent.user.userNickName}</h5>
         </div>
       </div>
     )
@@ -53,7 +53,7 @@ export default function PostList(){
         <div className="clear"></div>
         <button onClick={()=>{ 
           if(localStorage.getItem('authorization') != null){
-            navigate("/write") 
+            navigate("/posts/write") 
           } else {
             alert('로그인하세요')
           }

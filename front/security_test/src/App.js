@@ -7,8 +7,11 @@ import { Routes, Route, Link, useNavigate, Outlet } from 'react-router-dom'
 import './App.css';
 import PostList from './pages/PostList';
 import WirtePost from './pages/WritePost';
+import EditPost from './pages/EditPost';
 import DetailPost from './pages/DetailPost';
 import MyPage from './pages/MyPage';
+import EditUser from './pages/EditUser';
+
 
 function App() {
   const loginModal = useSelector((state)=>{ return state.loginModal })
@@ -16,15 +19,17 @@ function App() {
 
   return (
     <div className="App">
-      <Navbar/>
       {loginModal ? <Login/> : null}
       {joinModal ? <Join/> : null}
+      <Navbar/>
       <Routes>
         <Route path='/' element={ <PostList/> }/>
-        <Route path='/posts/:id' element={ <DetailPost/> }/>
         <Route path='/posts' element={ <PostList/> }/>
-        <Route path='/write' element={ <WirtePost/> }/>
+        <Route path='/posts/:id' element={ <DetailPost/> }/>
+        <Route path='/posts/edit/:id' element={ <EditPost/> }/>
+        <Route path='/posts/write' element={ <WirtePost/> }/>
         <Route path='/mypage' element={ <MyPage/> }/>
+        <Route path='/mypage/edit' element={ <EditUser/> }/>
       </Routes>
       
       

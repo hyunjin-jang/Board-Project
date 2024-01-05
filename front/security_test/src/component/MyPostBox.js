@@ -13,8 +13,8 @@ export default function MyPostBox(){
       <div className="post-list">
           {
             postList.map((post)=>{
-              console.log(post.user.userName)
-              if(post.user.userName == "noah"){
+              console.log(post.user.userNickName)
+              if(post.user.userNickName == "admin"){
                 return (
                   <div className="myposts">
                     <h5>{post.postTitle}</h5>

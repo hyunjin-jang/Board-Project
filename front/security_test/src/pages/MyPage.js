@@ -5,7 +5,7 @@ export default function MyPage(){
   return (
     <div className="mypage-container">
       <ProfileBox/>
-      <MyPostBox/>
+      {/* <MyPostBox/> */}
     </div>
   )
 }

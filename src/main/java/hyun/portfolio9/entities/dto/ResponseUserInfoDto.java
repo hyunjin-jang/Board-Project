@@ -4,7 +4,8 @@ import lombok.Data;
 
 @Data
 public class ResponseUserInfoDto {
-    private String userName;
+    private Long userId;
+    private String userNickName;
     private String userBirth;
     private String userEmail;
     private String userPhone;
