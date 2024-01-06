@@ -2,7 +2,7 @@ import axios from "axios"
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
-import { setLoginToken, setPostList } from "../store/store"
+import { setPostList } from "../store/store"
 
 export default function PostList(){
   const navigate = useNavigate()
@@ -14,9 +14,6 @@ export default function PostList(){
     axios.get("http://localhost:8080/posts")
     .then((response)=>{
       dispatch(setPostList(response.data))
-      if(localStorage.getItem("authorization")){
-        dispatch(setLoginToken(true))
-      }
     }).catch((error)=>{
       console.log(error)
     })

@@ -54,7 +54,7 @@ export default function DetailPost(){
           <div className="selectImage">
             <button onClick={(e)=>{
               if(currentImage > 0){
-                currentImage = currentImage-650
+                currentImage = currentImage-500
                 document.querySelector('.slide-container').style.transform='translateX(-'+currentImage+'px)'
               }
             }}>◀</button>
@@ -64,7 +64,7 @@ export default function DetailPost(){
               images.map((image, id)=>{
                 return (
                   <button key={id} onClick={()=>{
-                    currentImage = id*650
+                    currentImage = id*500
                     document.querySelector('.slide-container').style.transform='translateX(-'+currentImage+'px)'
                   }}>{id+1}</button>
                 )
@@ -72,8 +72,8 @@ export default function DetailPost(){
               null
             }
             <button onClick={()=>{
-              if(currentImage < (images.length-1)*650){
-                currentImage = currentImage + 650
+              if(currentImage < (images.length-1)*500){
+                currentImage = currentImage + 500
                 document.querySelector('.slide-container').style.transform='translateX(-'+currentImage+'px)'
               } else {
                 currentImage = 0

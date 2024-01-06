@@ -38,7 +38,7 @@ public class SecurityConfig {
                 .addFilter(new JwtAuthenticationFilter(authenticationManager, jwtProviderService))
                 .addFilter(new JwtAuthorizationFilter(authenticationManager, jwtProviderService, userRepository))
                 .authorizeHttpRequests()
-                .requestMatchers(HttpMethod.GET, "/admin").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.GET, "/admin").hasRole("GUEST")
                 .anyRequest().permitAll();
         return http.build();
     }

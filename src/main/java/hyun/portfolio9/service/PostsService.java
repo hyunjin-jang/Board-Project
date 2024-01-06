@@ -8,6 +8,7 @@ import hyun.portfolio9.entities.dto.editPostDto;
 import hyun.portfolio9.repositories.PostsRepository;
 import hyun.portfolio9.repositories.UserRepository;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.Resource;
 import org.springframework.http.ResponseEntity;
@@ -98,5 +99,11 @@ public class PostsService {
                 );
         postsRepository.save(posts);
         return "수정 완료!";
+    }
+
+    @Transactional
+    public List<Posts> search(String keyworkd) {
+        List<Posts> postsList = postsRepository.findByPostTitleContaining(keyworkd);
+        return postsList;
     }
 }

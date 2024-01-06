@@ -56,4 +56,10 @@ public class PostsControler {
     public String deletePost(@PathVariable Long postId) {
         return postsService.postDelete(postId);
     }
+
+    @GetMapping("/posts/search/{keyword}")
+    public List<Posts> searchList(@PathVariable String keyword){
+        List<Posts> postsList = postsService.search(keyword);
+        return postsList;
+    }
 }
