@@ -23,10 +23,10 @@ public class UserService {
 
     public String create(JoinDto dto, HttpServletResponse response) {
         if(!(userRepository.findByUserNickName(dto.getUserNickName()) == null)){
-            return "이미 있는 아이디임";
+            return "이미 있는 닉네임입니다.";
         }
         if(!(userRepository.findByUserEmail(dto.getUserNickName()) == null)) {
-            return "이미 있는 이메일임";
+            return "이미 있는 이메일입니다.";
         }
 
         User user = new User();
@@ -37,7 +37,7 @@ public class UserService {
         user.setUserRole(Role.GUEST);
         userRepository.save(user);
 
-        String jwtToken = jwtProviderService.create(user.getUserNickName());
+        String jwtToken = jwtProviderService.create(user.getUserEmail());
         response.addHeader("Authorization", "Bearer " + jwtToken);
         return "create " + user.getUserRole();
     }
@@ -47,7 +47,7 @@ public class UserService {
             throw new TokenNotFoundException("Token 없음");
         }
         String findUsername = jwtProviderService.validate(token);
-        User findUser = userRepository.findByUserNickName(findUsername);
+        User findUser = userRepository.findByUserEmail(findUsername);
         ResponseUserInfoDto responseUser = new ResponseUserInfoDto();
         responseUser.setUserId(findUser.getUserId());
         responseUser.setUserNickName(findUser.getUserNickName());

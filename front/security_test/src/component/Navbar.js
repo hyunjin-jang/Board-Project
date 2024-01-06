@@ -13,6 +13,7 @@ function Navbar(){
     localStorage.removeItem('authorization')
     navigate("/")
   }
+  console.log(localStorage.getItem('authorization'))
   
   return (
     <div className="navbar-container">

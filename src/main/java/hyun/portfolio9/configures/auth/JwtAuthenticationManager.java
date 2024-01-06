@@ -30,7 +30,7 @@ public class JwtAuthenticationManager implements AuthenticationManager {
         // User 이름이 데이터베이스 안에 있는지 확인
         PrincipalDetails principalDetails = (PrincipalDetails) principalDetailsService.loadUserByUsername(username);
 
-        String encodedPassword = userRepository.findByUserNickName(username).getUserPassword();
+        String encodedPassword = userRepository.findByUserEmail(username).getUserPassword();
 
         if (!passwordEncoder().matches(password, encodedPassword)) {
             System.out.println("비번 틀림");

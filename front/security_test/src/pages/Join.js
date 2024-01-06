@@ -4,6 +4,12 @@ import { setJoinModal, setUserToken } from '../store/store';
 import axios from "axios";
 
 export default function Join(){
+  const isEmail = (email) => {
+    const emailRegex = 
+      /^(([^<>()\[\].,;:\s@"]+(\.[^<>()\[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i;
+    return emailRegex.test(email)
+  }
+
   const dispatch = useDispatch()
   const [userNickName, setJoinUserNickName] = useState()
   const [userEmail, setJoinUserEmail] = useState()
@@ -18,17 +24,21 @@ export default function Join(){
   }
 
   function joinAction(){
-    axios.post("http://localhost:8080/user", joinInfo)
-    .then((response)=>{
-      localStorage.setItem("authorization", response.headers['authorization'])
-      dispatch(setJoinModal(false))
-    }).catch((error)=>{
-      if(error.code == "ERR_BAD_REQUEST") {
-        console.log("중복 아이디 있음")
-      } else {
-        console.log("error발생")
-      }
-    })
+    if(isEmail(joinInfo.userEmail)){
+      axios.post("http://localhost:8080/user", joinInfo)
+      .then((response)=>{
+        localStorage.setItem("authorization", response.headers['authorization'])
+        dispatch(setJoinModal(false))
+      }).catch((error)=>{
+        if(error.code == "ERR_BAD_REQUEST") {
+          console.log("중복 아이디 있음")
+        } else {
+          console.log("error발생")
+        }
+      })
+    } else {
+      return alert("이메일 형식이 아님")
+    }
   }
   
   return (

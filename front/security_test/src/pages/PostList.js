@@ -18,6 +18,7 @@ export default function PostList(){
         dispatch(setLoginToken(true))
       }
     }).catch((error)=>{
+      console.log(error)
     })
   }, [postCount])
 

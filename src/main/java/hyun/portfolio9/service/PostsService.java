@@ -29,8 +29,8 @@ public class PostsService {
 
     public String postWrite(WriteDto dto, HttpServletRequest http) {
         String jwt = http.getHeader("Authorization").replace("Bearer ", "");
-        String findName = jwtProviderService.validate(jwt);
-        User findUser = userRepository.findByUserNickName(findName);
+        String findEmail = jwtProviderService.validate(jwt);
+        User findUser = userRepository.findByUserEmail(findEmail);
 
         Posts posts = new Posts();
         posts.setPostTitle(dto.getPostTitle());
@@ -49,7 +49,6 @@ public class PostsService {
         for (MultipartFile file : files) {
             imageNames.add(String.valueOf(imageService.uploadImage(file)));
         }
-
         return imageNames;
     }
 
@@ -77,14 +76,15 @@ public class PostsService {
         dto.setPostCreateTime(findPost.get().getPostCreateTime());
         dto.setPostModifyTime(findPost.get().getPostModifyTime());
         dto.setUserNickName(findPost.get().getUser().getUserNickName());
+        dto.setUserEmail(findPost.get().getUser().getUserEmail());
         return dto;
     }
 
     public String postEdit(editPostDto dto, HttpServletRequest http) {
         String jwt = http.getHeader("Authorization").replace("Bearer ", "");
         Optional<Posts> findPost = postsRepository.findById(dto.getPostId());
-        String findName = jwtProviderService.validate(jwt);
-        User findUser = userRepository.findByUserNickName(findName);
+        String findEmail = jwtProviderService.validate(jwt);
+        User findUser = userRepository.findByUserEmail(findEmail);
 
         Posts posts = new Posts(
                 dto.getPostId(),

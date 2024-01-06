@@ -14,4 +14,5 @@ public class ResponsePostFindByIdDto {
     private LocalDateTime postCreateTime;
     private LocalDateTime postModifyTime;
     private String userNickName;
+    private String userEmail;
 }

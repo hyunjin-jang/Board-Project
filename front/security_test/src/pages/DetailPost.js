@@ -7,7 +7,7 @@ export default function DetailPost(){
   const {id} = useParams()
   const [posting, setPosting] = useState()
   const [images, setImages] = useState()
-  const [tokenUser, setTokenUser] = useState();
+  const [loginUserEmail, setLoginUserEmail] = useState();
   let currentImage = 0
   
   useEffect(()=>{
@@ -21,7 +21,7 @@ export default function DetailPost(){
       axios.defaults.headers.common.Authorization = localStorage.getItem('authorization')
       axios.get('http://localhost:8080/user')
       .then((response)=>{
-        setTokenUser(response.data.userNickName)
+        setLoginUserEmail(response.data.userEmail)
       })
     }
   }, [])
@@ -84,7 +84,7 @@ export default function DetailPost(){
         </div>
         <div className="detail-content"> 
           { posting ?
-            posting.userNickName == tokenUser ?
+            posting.userEmail == loginUserEmail ?
             <>
               <button onClick={()=>{ navigate('/posts/edit/'+id) }}>수정</button>
               <button onClick={postDelete}>삭제</button> 
