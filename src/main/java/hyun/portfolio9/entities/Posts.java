@@ -1,5 +1,6 @@
 package hyun.portfolio9.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -7,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -27,4 +29,7 @@ public class Posts {
     @ManyToOne
     @JoinColumn(name = "userId")
     private User user;
+    @JsonIgnore
+    @OneToMany(mappedBy = "posts")
+    private List<Comment> commentList = new ArrayList<>();
 }

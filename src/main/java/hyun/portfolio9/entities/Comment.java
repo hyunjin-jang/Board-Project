@@ -1,0 +1,28 @@
+package hyun.portfolio9.entities;
+
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.time.LocalDateTime;
+import java.util.List;
+
+@Data
+@Entity
+@NoArgsConstructor
+@AllArgsConstructor
+public class Comment {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long commentId;
+    private String commentContent;
+    private LocalDateTime commentCreateTime;
+    private LocalDateTime commentModifyTime;
+    @ManyToOne
+    @JoinColumn(name = "userId")
+    private User user;
+    @ManyToOne
+    @JoinColumn(name = "postId")
+    private Posts posts;
+}

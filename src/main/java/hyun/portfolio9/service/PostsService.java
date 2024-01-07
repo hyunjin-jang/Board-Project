@@ -87,16 +87,16 @@ public class PostsService {
         String findEmail = jwtProviderService.validate(jwt);
         User findUser = userRepository.findByUserEmail(findEmail);
 
-        Posts posts = new Posts(
-                dto.getPostId(),
-                dto.getPostTitle(),
-                dto.getPostContent(),
-                findPost.get().getPostCount(),
-                dto.getPostImageNames(),
-                findPost.get().getPostCreateTime(),
-                LocalDateTime.now(),
-                findUser
-                );
+        Posts posts = Posts.builder()
+                .postId(dto.getPostId())
+                .postTitle(dto.getPostTitle())
+                .postContent(dto.getPostContent())
+                .postCount(findPost.get().getPostCount())
+                .postImageNames(dto.getPostImageNames())
+                .postCreateTime(findPost.get().getPostCreateTime())
+                .postModifyTime(LocalDateTime.now())
+                .user(findUser)
+                .build();
         postsRepository.save(posts);
         return "수정 완료!";
     }

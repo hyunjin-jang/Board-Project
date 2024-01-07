@@ -10,9 +10,6 @@ export default function EditPost(){
   const [postId, setPostId] = useState(id)
   const files = new FormData()
 
-  const [getPostTitle, setGetPostTitle] = useState()
-  const [getPostContent, setGetPostContent] = useState()
-
   const editPostDto = {
     postId,
     postTitle,
@@ -23,8 +20,6 @@ export default function EditPost(){
     
     axios.get('http://localhost:8080/posts/'+(id))
     .then((response)=>{
-      setGetPostTitle(response.data.postTitle)
-      setGetPostContent(response.data.postContent)
       setPostTitle(response.data.postTitle);
       setPostContent(response.data.postContent)
     })
@@ -60,9 +55,9 @@ export default function EditPost(){
     <div className="write-container">
       <form onSubmit={ handleSubmit } className="write-box">
         <h5>제목</h5>
-        <input className="write-title" value={getPostTitle} onChange={(e)=>{ setPostTitle(e.target.value) }}></input>
+        <input className="write-title" value={postTitle} onChange={(e)=>{ setPostTitle(e.target.value) }}></input>
         <h5>내용</h5>
-        <textarea value={getPostContent} onChange={(e)=>{ setPostContent(e.target.value) }}/>
+        <textarea value={postContent} onChange={(e)=>{ setPostContent(e.target.value) }}/>
         <br/>
         <input type="file" multiple name="files" onChange={ handleImageUpload }/>
         <br/>
