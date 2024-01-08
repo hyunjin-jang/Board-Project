@@ -8,7 +8,13 @@ export default function DetailPost(){
   const [posting, setPosting] = useState()
   const [images, setImages] = useState()
   const [loginUserEmail, setLoginUserEmail] = useState();
+  const [comment, setComment] = useState();
   let currentImage = 0
+
+  const WriteCommentDto = {
+    comment,
+    posting
+  }
   
   useEffect(()=>{
     axios.get('http://localhost:8080/posts/'+(id))
@@ -32,6 +38,14 @@ export default function DetailPost(){
       navigate(-1)
     }).catch((error)=>{
       console.log(error)
+    })
+  }
+
+  function commentAction(){
+    console.log(WriteCommentDto)
+    axios.post("http://localhost:8080/comment", WriteCommentDto)
+    .then((response)=>{
+      console.log(response.data)
     })
   }
 
@@ -104,9 +118,9 @@ export default function DetailPost(){
             </> :
             <p>Loding...</p>
           }
-          <h3>댓글</h3>
-          <input className="comment-input" placeholder="댓글을 적어보세요"/>
-          <button className="comment-btn">작성</button>
+          {/* <h3>댓글</h3>
+          <input className="comment-input" placeholder="댓글을 적어보세요" onChange={(e)=>{ setComment(e.target.value) }}/>
+          <button className="comment-btn" onClick={ commentAction }>작성</button> */}
         </div>
       </div>
     </div>

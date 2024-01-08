@@ -62,17 +62,18 @@ public class UserService {
     public String editUser(EditUserDto dto) {
         Optional<User> foundUser = userRepository.findById(dto.getUserId());
         if(foundUser != null) {
-            User user = new User(
-                    dto.getUserId(),
-                    dto.getEditNickName(),
-                    foundUser.get().getUserPassword(),
-                    foundUser.get().getUserBirth(),
-                    dto.getEditEmail(),
-                    dto.getEditPhone(),
-                    dto.getEditAddress(),
-                    foundUser.get().getUserRole(),
-                    foundUser.get().getPostsList()
-            );
+            User user = User.builder()
+                    .userId(dto.getUserId())
+                    .userNickName(dto.getEditNickName())
+                    .userPassword(foundUser.get().getUserPassword())
+                    .userBirth(foundUser.get().getUserBirth())
+                    .userEmail(dto.getEditEmail())
+                    .userPhone(dto.getEditPhone())
+                    .userAddress(dto.getEditAddress())
+                    .userRole(foundUser.get().getUserRole())
+                    .postsList(foundUser.get().getPostsList())
+                    .build();
+
             userRepository.save(user);
             return "수정 완료";
         }
