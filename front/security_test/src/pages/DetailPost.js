@@ -7,8 +7,10 @@ export default function DetailPost(){
   const {id} = useParams()
   const [posting, setPosting] = useState()
   const [images, setImages] = useState()
-  const [loginUserEmail, setLoginUserEmail] = useState();
-  const [comment, setComment] = useState();
+  const [getComment, setGetComment] = useState()
+  const [comment, setComment] = useState()
+  const [commentCount, setCommentCount] = useState()
+  const [loginUserEmail, setLoginUserEmail] = useState()
   let currentImage = 0
 
   const WriteCommentDto = {
@@ -19,9 +21,11 @@ export default function DetailPost(){
   useEffect(()=>{
     axios.get('http://localhost:8080/posts/'+(id))
     .then((response)=>{
-      console.log(response.data)
+      console.log(response.data.commentList)
       setPosting(response.data)
       setImages(response.data.postImageNames)
+      setGetComment(response.data.commentList)
+      setCommentCount(response.data.commentList.length)
     })
     if(localStorage.getItem('authorization')){
       axios.defaults.headers.common.Authorization = localStorage.getItem('authorization')
@@ -30,7 +34,7 @@ export default function DetailPost(){
         setLoginUserEmail(response.data.userEmail)
       })
     }
-  }, [])
+  }, [commentCount])
 
   function postDelete(){
     axios.delete("http://localhost:8080/posts/"+(id))
@@ -43,9 +47,10 @@ export default function DetailPost(){
 
   function commentAction(){
     console.log(WriteCommentDto)
+    axios.defaults.headers.common.Authorization = localStorage.getItem('authorization')
     axios.post("http://localhost:8080/comment", WriteCommentDto)
     .then((response)=>{
-      console.log(response.data)
+      setCommentCount(commentCount+1)
     })
   }
 
@@ -118,9 +123,22 @@ export default function DetailPost(){
             </> :
             <p>Loding...</p>
           }
-          {/* <h3>댓글</h3>
-          <input className="comment-input" placeholder="댓글을 적어보세요" onChange={(e)=>{ setComment(e.target.value) }}/>
-          <button className="comment-btn" onClick={ commentAction }>작성</button> */}
+          <div>
+            <h3>댓글</h3>
+            <input className="comment-input" placeholder="댓글을 적어보세요" onChange={(e)=>{ setComment(e.target.value) }}/>
+            <button className="comment-btn" onClick={ commentAction }>작성</button>
+            {
+            posting ?
+            getComment.map((comment, id)=>{
+              return (
+                <div>
+                  <p>{comment.commentContent} <span>{comment.user.userNickName}</span></p>
+                </div>
+              )
+            }):
+            null
+            }
+          </div>
         </div>
       </div>
     </div>

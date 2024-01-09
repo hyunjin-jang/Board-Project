@@ -1,12 +1,16 @@
 package hyun.portfolio9.controlers;
 
+import hyun.portfolio9.entities.Comment;
 import hyun.portfolio9.entities.dto.WriteCommentDto;
 import hyun.portfolio9.service.CommentService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor

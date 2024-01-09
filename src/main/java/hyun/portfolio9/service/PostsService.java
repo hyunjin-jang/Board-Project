@@ -70,6 +70,7 @@ public class PostsService {
     public ResponsePostFindByIdDto findById(Long postId) {
         Optional<Posts> findPost = postsRepository.findById(postId);
         ResponsePostFindByIdDto dto = new ResponsePostFindByIdDto();
+        dto.setPostId(postId);
         dto.setPostTitle(findPost.get().getPostTitle());
         dto.setPostContent(findPost.get().getPostContent());
         dto.setPostCount(findPost.get().getPostCount());
@@ -78,6 +79,7 @@ public class PostsService {
         dto.setPostModifyTime(findPost.get().getPostModifyTime());
         dto.setUserNickName(findPost.get().getUser().getUserNickName());
         dto.setUserEmail(findPost.get().getUser().getUserEmail());
+        dto.setCommentList(findPost.get().getCommentList());
         return dto;
     }
 
