@@ -21,7 +21,7 @@ public class Comment {
     private String commentContent;
     private LocalDateTime commentCreateTime;
     private LocalDateTime commentModifyTime;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "userId")
     private User user;
     @ManyToOne(fetch = FetchType.LAZY)
