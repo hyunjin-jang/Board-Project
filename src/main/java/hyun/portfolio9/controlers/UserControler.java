@@ -40,6 +40,12 @@ public class UserControler {
         return userService.getUser(jwt);
     }
 
+    @DeleteMapping("/user/{id}")
+    private String deleteUser(@PathVariable Long id) {
+        userRepository.deleteById(id);
+        return "삭제 성공";
+    }
+
 
 
 
