@@ -19,7 +19,7 @@ public class CorsConfig implements WebMvcConfigurer {
         registry.addMapping("/**")
                 .allowedOrigins("http://15.152.189.106:3000")
                 .allowedMethods("OPTIONS, GET, POST, PUT, DELETE")
-                .allowedHeaders("authorization");
+                .allowedHeaders("Authorization");
     }
 
     @Bean
