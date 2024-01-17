@@ -31,6 +31,7 @@ public class CorsConfig implements WebMvcConfigurer {
         config.addAllowedOrigin("http://15.152.189.106:3000");
         config.addAllowedHeader("*");
         config.addAllowedMethod("*");
+        config.addExposedHeader("Authorization");
         source.registerCorsConfiguration("/**", config);
         return new CorsFilter(source);
     }
