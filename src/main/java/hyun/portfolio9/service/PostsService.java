@@ -10,7 +10,7 @@ import hyun.portfolio9.repositories.UserRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -27,6 +27,7 @@ public class PostsService {
     private final UserRepository userRepository;
     private final JwtProviderService jwtProviderService;
     private final ImageService imageService;
+    private final S3Service s3Service;
 
     public String postWrite(WriteDto dto, HttpServletRequest http) {
         String jwt = http.getHeader("Authorization").replace("Bearer ", "");
@@ -48,7 +49,11 @@ public class PostsService {
     public List<String> postUploadImage(List<MultipartFile> files) {
         List<String> imageNames = new ArrayList<>();
         for (MultipartFile file : files) {
-            imageNames.add(String.valueOf(imageService.uploadImage(file)));
+            try {
+                imageNames.add(String.valueOf(s3Service.saveFile(file)));
+            } catch (Exception e) {
+                return null;
+            }
         }
         return imageNames;
     }
@@ -57,8 +62,8 @@ public class PostsService {
         return postsRepository.findAll();
     }
 
-    public ResponseEntity<Resource> postDownloadImage(String imageName) {
-        return imageService.downloadImage(imageName);
+    public ResponseEntity<String> postDownloadImage(String imageName) {
+        return s3Service.imagePreview(imageName);
     }
 
     public String postDelete(Long postId) {

@@ -3,6 +3,7 @@ package hyun.portfolio9.service;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +13,8 @@ import java.util.Date;
 
 @Service
 public class JwtProviderService {
-    private static final String SECURITY_KEY ="hyunhyun";
+    @Value("${JWT.SECURITY_KEY}")
+    private String SECURITY_KEY;
 
     public String create(String username) {
         Date exprTime = Date.from(Instant.now().plus(1, ChronoUnit.HOURS));

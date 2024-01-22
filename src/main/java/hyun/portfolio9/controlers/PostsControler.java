@@ -8,7 +8,7 @@ import hyun.portfolio9.repositories.PostsRepository;
 import hyun.portfolio9.service.PostsService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
-import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -27,7 +27,7 @@ public class PostsControler {
     }
 
     @GetMapping("/posts/image/{imageName}")
-    public ResponseEntity<Resource> downloadImage(@PathVariable String imageName) {
+    public ResponseEntity<String> downloadImage(@PathVariable String imageName) {
         return postsService.postDownloadImage(imageName);
     }
 

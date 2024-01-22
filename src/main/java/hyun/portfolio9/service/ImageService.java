@@ -21,6 +21,7 @@ public class ImageService {
     public String uploadImage(MultipartFile file) {
         try {
             String fileName = System.currentTimeMillis() + "_" + file.getOriginalFilename();
+
             File dest = new File(uploadPath + "/" + fileName);
             file.transferTo(dest);
             return fileName;
