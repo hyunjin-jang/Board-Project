@@ -30,6 +30,6 @@ public class Posts {
     @JoinColumn(name = "userId")
     private User user;
     @JsonIgnore
-    @OneToMany(mappedBy = "posts")
+    @OneToMany(mappedBy = "posts", cascade = CascadeType.ALL)
     private List<Comment> commentList = new ArrayList<>();
 }

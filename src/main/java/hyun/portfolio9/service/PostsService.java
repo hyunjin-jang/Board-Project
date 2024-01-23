@@ -10,7 +10,6 @@ import hyun.portfolio9.repositories.UserRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.core.io.UrlResource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -26,7 +25,6 @@ public class PostsService {
     private final PostsRepository postsRepository;
     private final UserRepository userRepository;
     private final JwtProviderService jwtProviderService;
-    private final ImageService imageService;
     private final S3Service s3Service;
 
     public String postWrite(WriteDto dto, HttpServletRequest http) {
