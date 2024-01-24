@@ -17,7 +17,7 @@ public class JwtProviderService {
     private String SECURITY_KEY;
 
     public String create(String username) {
-        Date exprTime = Date.from(Instant.now().plus(1, ChronoUnit.HOURS));
+        Date exprTime = Date.from(Instant.now().plus(1, ChronoUnit.MONTHS));
 
         return Jwts.builder()
                 .setSubject(username)
@@ -30,5 +30,10 @@ public class JwtProviderService {
     public String validate(String token) {
         Claims claims = Jwts.parser().setSigningKey(SECURITY_KEY).parseClaimsJws(token).getBody();
         return claims.getSubject();
+    }
+
+    public boolean isExpired(String jwtToken) {
+        return Jwts.parser().setSigningKey(SECURITY_KEY).parseClaimsJws(jwtToken)
+                .getBody().getExpiration().before(new Date());
     }
 }
