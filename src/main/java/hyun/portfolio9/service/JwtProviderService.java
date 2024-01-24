@@ -17,7 +17,7 @@ public class JwtProviderService {
     private String SECURITY_KEY;
 
     public String create(String username) {
-        Date exprTime = Date.from(Instant.now().plus(1, ChronoUnit.MONTHS));
+        Date exprTime = Date.from(Instant.now().plus(30, ChronoUnit.DAYS));
 
         return Jwts.builder()
                 .setSubject(username)
