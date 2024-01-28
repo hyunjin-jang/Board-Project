@@ -1,4 +1,4 @@
-package hyun.portfolio9.controlers;
+package hyun.portfolio9.controllers;
 
 import hyun.portfolio9.entities.dto.EditUserDto;
 import hyun.portfolio9.entities.dto.JoinDto;
@@ -18,7 +18,7 @@ import java.util.Collection;
 
 @RestController
 @RequiredArgsConstructor
-public class UserControler {
+public class UserController {
     private final UserService userService;
     private final UserRepository userRepository;
 

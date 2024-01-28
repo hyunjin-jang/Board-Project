@@ -2,6 +2,7 @@ package hyun.portfolio9.service;
 
 import hyun.portfolio9.entities.Posts;
 import hyun.portfolio9.entities.User;
+import hyun.portfolio9.entities.dto.PostPagingDto;
 import hyun.portfolio9.entities.dto.ResponsePostFindByIdDto;
 import hyun.portfolio9.entities.dto.WriteDto;
 import hyun.portfolio9.entities.dto.editPostDto;
@@ -10,6 +11,10 @@ import hyun.portfolio9.repositories.UserRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -26,6 +31,16 @@ public class PostsService {
     private final UserRepository userRepository;
     private final JwtProviderService jwtProviderService;
     private final S3Service s3Service;
+
+    public Page<Posts> findAllPosts(int page) {
+        Pageable pageable = PageRequest.of(page, 6);
+
+        Page<Posts> postPages = postsRepository.findAll(pageable);
+
+        Page<Posts> postDTOPages = postPages.map(postPage -> new Posts(postPage));
+        return postDTOPages;
+
+    }
 
     public String postWrite(WriteDto dto, HttpServletRequest http) {
         String jwt = http.getHeader("Authorization").replace("Bearer ", "");

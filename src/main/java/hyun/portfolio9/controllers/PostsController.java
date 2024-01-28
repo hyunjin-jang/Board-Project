@@ -1,6 +1,7 @@
-package hyun.portfolio9.controlers;
+package hyun.portfolio9.controllers;
 
 import hyun.portfolio9.entities.Posts;
+import hyun.portfolio9.entities.dto.PostPagingDto;
 import hyun.portfolio9.entities.dto.ResponsePostFindByIdDto;
 import hyun.portfolio9.entities.dto.WriteDto;
 import hyun.portfolio9.entities.dto.editPostDto;
@@ -8,7 +9,7 @@ import hyun.portfolio9.repositories.PostsRepository;
 import hyun.portfolio9.service.PostsService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
-import org.springframework.core.io.UrlResource;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -17,9 +18,14 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-public class PostsControler {
+public class PostsController {
     private final PostsService postsService;
     private final PostsRepository postsRepository;
+
+    @GetMapping("/post/{page}")
+    public Page<Posts> findAllPosts(@PathVariable int page) {
+        return postsService.findAllPosts(page);
+    }
 
     @PostMapping("/posts/image")
     public List<String> uploadImage(@RequestParam List<MultipartFile> files) {

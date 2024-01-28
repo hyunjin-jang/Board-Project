@@ -32,4 +32,16 @@ public class Posts {
     @JsonIgnore
     @OneToMany(mappedBy = "posts", cascade = CascadeType.ALL)
     private List<Comment> commentList = new ArrayList<>();
+
+    public Posts(Posts posts) {
+        this.postId = posts.getPostId();
+        this.postTitle = posts.getPostTitle();
+        this.postContent = posts.getPostContent();
+        this.postCount = posts.getPostCount();
+        this.postImageNames = posts.getPostImageNames();
+        this.postCreateTime = posts.getPostCreateTime();
+        this.postModifyTime = posts.getPostModifyTime();
+        this.user = posts.getUser();
+        this.commentList = posts.getCommentList();
+    }
 }
